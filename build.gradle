@@ -1,0 +1,26 @@
+plugins {
+    id 'org.springframework.boot' version '2.1.7.RELEASE'
+    id 'java'
+}
+
+apply plugin: 'io.spring.dependency-management'
+group = 'com.github.dchristofolli'
+version = '1'
+sourceCompatibility = '11'
+configurations {
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+}
+repositories {
+    mavenCentral()
+}
+dependencies {
+    compile 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    compile 'org.springframework.boot:spring-boot-starter-web'
+  //  compile 'org.apache.camel:camel-spring-boot-starter:2.24.0'
+  //  compile "org.springframework.integration:spring-integration-ftp:5.2.0.M3"
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+
+}
