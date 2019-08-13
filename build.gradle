@@ -17,8 +17,9 @@ repositories {
     mavenCentral()
 }
 dependencies {
-    compile 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    compile 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
     compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.mongodb:mongodb-driver-sync:3.10.2'
   //  compile 'org.apache.camel:camel-spring-boot-starter:2.24.0'
   //  compile "org.springframework.integration:spring-integration-ftp:5.2.0.M3"
     testCompile 'org.springframework.boot:spring-boot-starter-test'

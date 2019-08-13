@@ -1,22 +1,21 @@
 package com.github.dchristofolli.dropbox.controllers;
-
-import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import javax.validation.constraints.Email;
 
-@Document
+@Document(collection="dropbox")
 public class User {
     @Id
     private String id;
-    @NotBlank(message = "O nome deve ser preenchido")
+    @NotNull(message = "O nome deve ser preenchido")
     private String nome;
     @CPF (message = "CPF inválido")
     private String cpf;
     @Email (message = "E-mail inválido")
     private String email;
-    @NotBlank (message = "A senha deve ser preenchida")
+    @NotNull (message = "A senha deve ser preenchida")
     private String senha;
 
     public User(String id, String nome, String cpf, String email, String senha) {
