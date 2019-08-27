@@ -9,21 +9,16 @@ import java.io.IOException;
 @Service
 public class FTPConnect {
     private final Logger logger = LoggerFactory.getLogger(FTPConnect.class);
-
-    private String host = "ftp";
-    private String user = "";
-    private String password = "";
     private FTPClient client;
 
     public FTPClient createConnection() {
         client = new FTPClient();
         try {
-            client.connect(host);
+            client.connect("ftp");
 
-            client.login(user, password);
+            client.login("","");
 
         } catch (IOException e) {
-
             logger.error(e.getMessage());
         }
         return this.client;
