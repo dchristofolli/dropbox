@@ -21,7 +21,7 @@ public class User {
     @NotBlank(message = "A senha deve ser preenchida")
     private String senha;
 
-    public User(){
+    public User(User user){
 
     }
 

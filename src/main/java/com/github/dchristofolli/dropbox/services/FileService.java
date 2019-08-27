@@ -2,7 +2,6 @@ package com.github.dchristofolli.dropbox.services;
 
 import com.github.dchristofolli.dropbox.controllers.File;
 import com.github.dchristofolli.dropbox.controllers.User;
-import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.springframework.beans.factory.annotation.Autowired;
