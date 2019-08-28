@@ -31,7 +31,7 @@ public class FTPConnect {
         serverFactory.addListener("default", listenerFactory.createListener());
         serverFactory.setFtplets(map);
         serverFactory.setConnectionConfig(connectionConfigFactory.createConnectionConfig());
-        serverFactory.setUserManager(FtpUser.criaUserManager();
+        serverFactory.setUserManager(FtpUser.criaUserManager());
         server = serverFactory.createServer();
 
         try {

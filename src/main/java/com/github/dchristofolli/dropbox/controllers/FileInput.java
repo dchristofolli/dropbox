@@ -2,12 +2,12 @@ package com.github.dchristofolli.dropbox.controllers;
 
 import org.apache.commons.net.ftp.FTPFile;
 
-public class File {
+public class FileInput {
     private String nomeArquivo;
     private String tamanhoArquivo;
     private String data;
 
-    public File(FTPFile arquivoFTP) {
+    public FileInput(FTPFile arquivoFTP) {
         this.setNomeArquivo(arquivoFTP.getName());
         this.setTamanhoArquivo(arquivoFTP.getSize() + " kb");
         this.setData(arquivoFTP.getRawListing());

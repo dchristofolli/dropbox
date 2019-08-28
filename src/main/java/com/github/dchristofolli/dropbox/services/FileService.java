@@ -1,76 +1,57 @@
 package com.github.dchristofolli.dropbox.services;
 
-import com.github.dchristofolli.dropbox.controllers.File;
-import com.github.dchristofolli.dropbox.controllers.User;
+import com.github.dchristofolli.dropbox.controllers.FileInput;
+import com.github.dchristofolli.dropbox.controllers.UserInput;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Optional;
 
 @Service
 public class FileService {
     @Autowired
     UserService userService;
-    @Autowired
-    ServiceUtil serviceUtil;
 
-    public boolean enviaArquivo(MultipartFile arquivo, Optional<User> user){
-        FTPClient ftpClient = ServiceUtil.conexao(String.valueOf(user.get()));
-        try {
-            return ftpClient.storeFile(arquivo.getOriginalFilename(), arquivo.getInputStream());
-        } catch (IOException e){
-            e.getMessage();
-            return false;
-        }
+    public boolean enviar(MultipartFile arquivo, String user) throws IOException {
+        FTPClient conexao = ServiceUtil.conexao(user);
+        FileInputStream stream = new FileInputStream((File) arquivo);
+        return conexao.storeFile(arquivo.getOriginalFilename(), arquivo.getInputStream());
     }
 
-    public boolean deletaArquivo(String nomeArquivo, User user){
-        FTPClient ftpClient = ServiceUtil.conexao(user.getNome());
-        try {
-            return ftpClient.deleteFile(nomeArquivo);
-        } catch (IOException e){
-            e.getMessage();
-            return false;
-        }
+
+    public Boolean deletar(String nomeArquivo,String user) throws IOException {
+        FTPClient conexao = ServiceUtil.conexao(user);
+        return conexao.deleteFile(nomeArquivo);
     }
 
-    public ArrayList<File> listaArquivos(String user) {
-        FTPClient ftpClient = ServiceUtil.conexao(user);
+    public ArrayList<FileInput> listar(UserInput user) throws IOException {
+        FTPClient conexao = ServiceUtil.conexao(user.getNome());
         try{
-            FTPFile[] ftpFiles = ftpClient.listFiles();
-            ArrayList<File> files = new ArrayList<>();
-            for (FTPFile ftpFile: ftpFiles){
-                File file = new File(ftpFile);
-                files.add(file);
-            }
-            return files;
+            FTPFile[] files = conexao.listFiles();
+            ArrayList<FileInput> fileInputs = new ArrayList<>();
+            for(FTPFile ftpFile : files){
+                FileInput arquivo = new FileInput(ftpFile);
+                fileInputs.add(arquivo);
         }
-        catch (IOException e){
+            return fileInputs;
+        } catch (IOException e){
             e.getMessage();
             return null;
         }
+
     }
-    public void download(User user, String nomeArquivo){
-        FTPClient ftpClient = ServiceUtil.conexao(user.getNome());
-        FileOutputStream fileOutputStream = null;
-        try{
-            fileOutputStream = new FileOutputStream("./dropbox/Downloads/" + nomeArquivo);
-        } catch (FileNotFoundException e){
-            e.printStackTrace();
-        }
-        try{
-            ftpClient.retrieveFile(nomeArquivo, fileOutputStream);
-        } catch (IOException e){
-            e.printStackTrace();
-        }
+
+    public void compartilhar(String user){
+        FTPClient conexao = ServiceUtil.conexao(user);
+
     }
+
 
 
 }

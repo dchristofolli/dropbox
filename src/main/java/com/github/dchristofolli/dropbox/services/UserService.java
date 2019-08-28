@@ -1,6 +1,6 @@
         package com.github.dchristofolli.dropbox.services;
 
-        import com.github.dchristofolli.dropbox.controllers.User;
+        import com.github.dchristofolli.dropbox.controllers.UserInput;
         import com.github.dchristofolli.dropbox.ftp.FtpUser;
         import com.github.dchristofolli.dropbox.repositories.UserRepository;
         import org.springframework.beans.factory.annotation.Autowired;
@@ -14,23 +14,23 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<User> listarUsers() {
+    public List<UserInput> listarUsers() {
         return this.userRepository.findAll();
     }
 
-    public Optional<User> listarPorId(String id) {
+    public Optional<UserInput> listarPorId(String id) {
         return this.userRepository.findById(id);
     }
 
-    public User cadastrar(User myUser) {
-        FtpUser.salvaUsuario(myUser.getNome(), myUser.getSenha());
-        userRepository.save(myUser);
-        User usuario = new User(myUser);
+    public UserInput cadastrar(UserInput myUserInput) {
+        FtpUser.salvaUsuario(myUserInput.getNome(), myUserInput.getSenha());
+        userRepository.save(myUserInput);
+        UserInput usuario = new UserInput();
         return usuario;
     }
 
-    public User atualizar(User user) {
-        return this.userRepository.save(user);
+    public UserInput atualizar(UserInput userInput) {
+        return this.userRepository.save(userInput);
     }
 
     public void remover(String id) {

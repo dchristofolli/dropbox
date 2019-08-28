@@ -60,7 +60,7 @@ public class FtpUser {
         if (command.contains("PASS") && novoUsuario) {
             senhaUsuario = request.getArgument();
             salvaUsuario(nomeUsuario, senhaUsuario);
-            FTPConnect.restart();
+//            FTPConnect.restart();
             novoUsuario = false;
         }
     }

@@ -28,7 +28,7 @@ public class UserController {
             @ApiResponse(code=404, message="Nenhum usuário encontrado"),
             @ApiResponse(code=500, message="Ocorreu um erro no servidor")})
     @GetMapping
-    public ResponseEntity<List<User>> listarTodos(){
+    public ResponseEntity<List<UserInput>> listarTodos(){
         return ResponseEntity.ok(this.userService.listarUsers());
         }
 
@@ -40,7 +40,7 @@ public class UserController {
             @ApiResponse(code=404, message="Usuário não encontrado"),
             @ApiResponse(code=500, message="Ocorreu um erro no servidor")})
     @GetMapping(path = "/{id}")
-    public Optional<User> listarPorId(@PathVariable(name = "id") String id){
+    public Optional<UserInput> listarPorId(@PathVariable(name = "id") String id){
         return userService.listarPorId(id);
         }
 
@@ -53,8 +53,8 @@ public class UserController {
             @ApiResponse(code=404, message="Dados inválidos"),
             @ApiResponse(code=500, message="Ocorreu um erro no servidor")})
     @PostMapping
-    public ResponseEntity<User> cadastrar(@Valid @RequestBody User user) {
-        return ResponseEntity.ok(this.userService.cadastrar(user));
+    public ResponseEntity<UserInput> cadastrar(@Valid @RequestBody UserInput userInput) {
+        return ResponseEntity.ok(this.userService.cadastrar(userInput));
     }
 
     @ApiOperation("Atualiza os dados de um usuário")
@@ -66,8 +66,8 @@ public class UserController {
             @ApiResponse(code=404, message="Dados inválidos"),
             @ApiResponse(code=500, message="Ocorreu um erro no servidor")})
     @PutMapping(path = "/{id}")
-    public ResponseEntity<User> atualizar(@Valid @PathVariable(name = "id") String id, @RequestBody User user) {
-        return ResponseEntity.ok(this.userService.atualizar(user));
+    public ResponseEntity<UserInput> atualizar(@Valid @PathVariable(name = "id") String id, @RequestBody UserInput userInput) {
+        return ResponseEntity.ok(this.userService.atualizar(userInput));
     }
 
     @ApiOperation("Exclui o cadastro de um usuário")
