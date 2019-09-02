@@ -2,6 +2,7 @@ package com.github.dchristofolli.dropbox.services;
 
 import com.github.dchristofolli.dropbox.controllers.FileInput;
 import com.github.dchristofolli.dropbox.controllers.UserInput;
+import com.github.dchristofolli.dropbox.services.UserService;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 
 @Service
@@ -18,12 +21,10 @@ public class FileService {
     @Autowired
     UserService userService;
 
-    public boolean enviar(MultipartFile arquivo, String user) throws IOException {
-        FTPClient conexao = ServiceUtil.conexao(user);
-        FileInputStream stream = new FileInputStream((File) arquivo);
+    public boolean enviar(MultipartFile arquivo, UserInput user) throws IOException {
+        FTPClient conexao = ServiceUtil.conexao(user.getNome());
         return conexao.storeFile(arquivo.getOriginalFilename(), arquivo.getInputStream());
     }
-
 
     public Boolean deletar(String nomeArquivo,String user) throws IOException {
         FTPClient conexao = ServiceUtil.conexao(user);

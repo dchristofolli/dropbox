@@ -52,7 +52,7 @@ public class FtpUser {
         return System.getProperty("user.dir") + "/servidorFTP/" + nome;
     }
 
-    public static void criarNovoUsuario(FtpRequest request, String command) throws FtpException {
+    public static void criarNovoUsuario(FtpRequest request, String command) {
         if (command.contains("USER")) {
             nomeUsuario = request.getArgument();
             novoUsuario = FtpUser.verificaUsuario(nomeUsuario);
@@ -60,7 +60,6 @@ public class FtpUser {
         if (command.contains("PASS") && novoUsuario) {
             senhaUsuario = request.getArgument();
             salvaUsuario(nomeUsuario, senhaUsuario);
-//            FTPConnect.restart();
             novoUsuario = false;
         }
     }

@@ -35,14 +35,12 @@ public class FileController {
             @ApiResponse(code=404, message = "Página não encontrada :(")
     })
     @PostMapping("/{id}")
-    public ResponseEntity envioArquivo(@RequestParam("arquivo") MultipartFile arquivo, @PathVariable String id)
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public ResponseEntity envioArquivo(@RequestParam("Arquivo") MultipartFile arquivo, @PathVariable String id)
             throws IOException {
-        Optional<UserInput> user = userService.listarPorId(id);
-        if (arquivo != null && id != null){
-            fileService.enviar(arquivo, user.get().getId());
+        UserInput user = userService.listarPorId(id).get();
+            fileService.enviar(arquivo, user);
             return new ResponseEntity(null, HttpStatus.ACCEPTED);
-        }
-        return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 
     @ApiOperation("Exibe uma lista dos arquivos do usuário")
