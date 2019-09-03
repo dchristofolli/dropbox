@@ -54,5 +54,13 @@ public class FileController {
         }
         return null;
     }
+    @ApiOperation("Exclui um arquivo de um usuário no servidor FTP")
+    @DeleteMapping("users/{id}/arquivo/{nome}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity excluiArquivo(@PathVariable String id, String arquivo) throws IOException {
+        UserInput user = userService.listarPorId(id).get();
+        fileService.deletar(arquivo, user);
+        return new ResponseEntity(null, HttpStatus.OK);
+    }
 
 }

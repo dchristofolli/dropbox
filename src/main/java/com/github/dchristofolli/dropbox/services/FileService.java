@@ -26,9 +26,9 @@ public class FileService {
         }
     }
 
-    public Boolean deletar(String nomeArquivo,UserInput user) throws IOException {
+    public Boolean deletar(String arquivo,UserInput user) throws IOException {
         FTPClient conexao = ServiceUtil.conexao(user.getNome(), user.getSenha());
-        return conexao.deleteFile(nomeArquivo);
+        return conexao.deleteFile(arquivo);
     }
 
     public ArrayList<FileInput> listar(UserInput user) throws IOException {
