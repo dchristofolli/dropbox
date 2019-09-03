@@ -20,6 +20,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+
     @ApiOperation("Lista todos os usuários")
     @ApiResponses({
             @ApiResponse(code=200, message ="Usuários encontrados"),
