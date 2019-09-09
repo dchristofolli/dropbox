@@ -17,11 +17,10 @@ import java.util.Map;
 public class ServerConfig {
 
 
-    private FtpServerFactory serverFactory;
     private FtpServer server;
 
-    public boolean start(){
-        serverFactory = new FtpServerFactory();
+    public void start(){
+        FtpServerFactory serverFactory = new FtpServerFactory();
 
         ListenerFactory listenerFactory = new ListenerFactory();
         listenerFactory.setPort(2021);
@@ -44,7 +43,6 @@ public class ServerConfig {
         } catch (FtpException e) {
             e.getMessage();
         }
-        return true;
     }
 
     public void stop() {

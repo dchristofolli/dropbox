@@ -19,11 +19,11 @@ public class FtpUser {
     public static UserManager criaUserManager() {
         PropertiesUserManagerFactory umf = new PropertiesUserManagerFactory();
         try {
-            new File("myuser.properties").createNewFile();
+            new File("users.properties").createNewFile();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        umf.setFile(new File("myuser.properties"));
+        umf.setFile(new File("users.properties"));
         return umf.createUserManager();
     }
 

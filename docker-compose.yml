@@ -1,0 +1,20 @@
+
+version: "2"
+services:
+  app:
+    container_name: "Dropbox"
+    restart: always
+    build: .
+    environment:
+      - MONGO_URI=mongodb://mongo/dropbox
+      - PORT=3000
+    ports:
+      - "3000:3000"
+    links:
+      - mongo
+    depends_on:
+      - mongo
+
+  mongo:
+    container_name: "dropbox"
+    image: mongo

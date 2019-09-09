@@ -36,4 +36,11 @@ public class UserService {
     public void remover(String id) {
         this.userRepository.deleteById(id);
     }
+
+    public UserInput permiteVisitante(String idUsuario, String idVisitante) {
+        Optional<UserInput> userInput = userRepository.findById(idUsuario);
+        UserInput user = userInput.get();
+        user.getSeguidores().add(idVisitante);
+        return cadastrar(user);
+    }
 }

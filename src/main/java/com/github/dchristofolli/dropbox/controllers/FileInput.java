@@ -1,16 +1,21 @@
 package com.github.dchristofolli.dropbox.controllers;
 
 import org.apache.commons.net.ftp.FTPFile;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class FileInput {
     private String nomeArquivo;
     private String tamanhoArquivo;
     private String data;
+//    private String dono;
 
+    @Autowired
+    UserInput userInput;
     public FileInput(FTPFile arquivoFTP) {
         this.setNomeArquivo(arquivoFTP.getName());
         this.setTamanhoArquivo(arquivoFTP.getSize() + " kb");
         this.setData(arquivoFTP.getRawListing());
+//        this.setDono(userInput.getNome());
     }
 
     public String getNomeArquivo() {
@@ -36,4 +41,12 @@ public class FileInput {
     public void setData(String data) {
         this.data = data;
     }
+
+//    public String getDono() {
+//        return dono;
+//    }
+//
+//    public void setDono(String dono) {
+//        this.dono = dono;
+//    }
 }

@@ -30,13 +30,13 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
     private ApiInfo metaData() {
         return new ApiInfoBuilder()
                 .title("Api Desafio Dropbox")
-                .description("\"Api Desafio Dropbox\"")
+                .contact("Daniel")
+                .description("Sistema de manutenção de arquivos em um servidor")
                 .version("1.0")
                 .license("Apache License Version 2.0")
-                .licenseUrl("https://www.apache.org/licenses/LICENSE-2.0\"")
+                .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
                 .build();
     }
-
     @Override
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("swagger-ui.html")

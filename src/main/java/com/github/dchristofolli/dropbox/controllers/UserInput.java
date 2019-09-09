@@ -1,15 +1,14 @@
 package com.github.dchristofolli.dropbox.controllers;
 
-import org.hibernate.validator.constraints.UniqueElements;
 import org.hibernate.validator.constraints.br.CPF;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import java.util.List;
 
 @Document
 public class UserInput {
@@ -21,25 +20,25 @@ public class UserInput {
     private String cpf;
     @Email (message = "E-mail inválido")
     private String email;
-    private Integer seguidores;
+    private List<String> seguidores;
     @NotBlank(message = "A senha deve ser preenchida")
-    @Size(min=6, message = "A senha deve ter pelo menos 6 caracteres")
+    @Size(min=4, message = "A senha deve ter pelo menos 4 caracteres")
     private String senha;
 
+    public UserInput(){
+    }
+
     public UserInput(String id, @NotNull(message = "O nome deve ser preenchido") String nome,
-                     @CPF(message = "CPF inválido") String cpf, @Email(message = "E-mail inválido") String email,
-                     Integer seguidores, @NotBlank(message = "A senha deve ser preenchida")
-                     @Size(min = 6, message = "A senha deve ter pelo menos 6 caracteres") String senha) {
+                     @CPF(message = "CPF inválido") String cpf,
+                     @Email(message = "E-mail inválido") String email, List<String> seguidores,
+                     @NotBlank(message = "A senha deve ser preenchida")
+                     @Size(min = 4, message = "A senha deve ter pelo menos 4 caracteres") String senha) {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
         this.email = email;
         this.seguidores = seguidores;
         this.senha = senha;
-    }
-
-    public UserInput(){
-
     }
 
     public String getId() {
@@ -74,19 +73,19 @@ public class UserInput {
         this.email = email;
     }
 
-    public Integer getSeguidores() {
-        return seguidores;
-    }
-
-    public void setSeguidores(Integer seguidores) {
-        this.seguidores = seguidores;
-    }
-
     public String getSenha() {
         return senha;
     }
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public List<String> getSeguidores() {
+        return seguidores;
+    }
+
+    public void setSeguidores(List<String> seguidores) {
+        this.seguidores = seguidores;
     }
 }

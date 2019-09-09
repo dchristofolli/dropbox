@@ -67,7 +67,8 @@ public class UserController {
             @ApiResponse(code=404, message="Dados inválidos"),
             @ApiResponse(code=500, message="Ocorreu um erro no servidor")})
     @PutMapping(path = "/{id}")
-    public ResponseEntity<UserInput> atualizar(@Valid @PathVariable(name = "id") String id, @RequestBody UserInput userInput) {
+    public ResponseEntity<UserInput> atualizar(@Valid @PathVariable(name = "id") String id,
+                                               @RequestBody UserInput userInput) {
         return ResponseEntity.ok(this.userService.atualizar(userInput));
     }
 
@@ -84,4 +85,10 @@ public class UserController {
         return ResponseEntity.ok("Usuário removido");
     }
 
+//    @ApiOperation("Permite que outro usuário tenha acesso aos arquivos")
+//    @PutMapping("/{idUsuario}/{idVisitante}")
+//    public UserInput adicionaVisitante(@PathVariable String idUsuario,
+//                                       @PathVariable String idVisitante){
+//        return userService.permiteVisitante(idUsuario, idVisitante);
+//    }
 }

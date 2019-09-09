@@ -5,10 +5,11 @@ import com.github.dchristofolli.dropbox.controllers.UserInput;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
 @Service
@@ -16,14 +17,15 @@ public class FileService {
     @Autowired
     UserService userService;
 
-    public boolean enviar(MultipartFile arquivo, UserInput userInput) {
+    public void enviar(MultipartFile arquivo, UserInput userInput){
+
         FTPClient conexao = ServiceUtil.conexao(userInput.getNome(), userInput.getSenha());
         try{
-            return conexao.storeFile(arquivo.getOriginalFilename(), arquivo.getInputStream());
+            conexao.storeFile(arquivo.getOriginalFilename(), arquivo.getInputStream());
         } catch (IOException e){
             e.getMessage();
-            return false;
         }
+
     }
 
     public Boolean deletar(String arquivo,UserInput user) throws IOException {
@@ -31,7 +33,7 @@ public class FileService {
         return conexao.deleteFile(arquivo);
     }
 
-    public ArrayList<FileInput> listar(UserInput user) throws IOException {
+    public ArrayList<FileInput> listarArquivosDoUsuario(UserInput user) {
         FTPClient conexao = ServiceUtil.conexao(user.getNome(), user.getSenha());
         try{
             FTPFile[] files = conexao.listFiles();
@@ -43,16 +45,12 @@ public class FileService {
             return fileInputs;
         } catch (IOException e){
             e.getMessage();
-            return null;
+            return listarArquivosDoUsuario(null);
         }
-
     }
 
-//    public void compartilhar(String user){
-//        FTPClient conexao = ServiceUtil.conexao(user);
-//
+//    public Page<FileInput> listaPaginada(int pagina, int quantidade, UserInput usuario) {
+//        FTPClient conexao = ServiceUtil.conexao(usuario.getNome(),usuario.getSenha());
+//        return ServiceUtil.pagina(listarArquivosDoUsuario(usuario), pagina, quantidade);
 //    }
-
-
-
 }
