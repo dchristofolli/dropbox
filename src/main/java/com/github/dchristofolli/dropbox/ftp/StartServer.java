@@ -1,18 +1,18 @@
 package com.github.dchristofolli.dropbox.ftp;
 
-import com.github.dchristofolli.dropbox.server.ServerConfig;
+import com.github.dchristofolli.dropbox.services.FtpService;
 
 public class StartServer {
-    private static ServerConfig serverConfig = new ServerConfig();
+    private static FtpService ftpService = new FtpService();
     public StartServer(){
 
     }
 
     public static void run(){
-        serverConfig.start();
+        ftpService.start();
     }
     public void restart(){
-        serverConfig.stop();
-        serverConfig.start();
+        ftpService.stop();
+        ftpService.start();
     }
 }

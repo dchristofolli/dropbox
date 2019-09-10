@@ -1,4 +1,4 @@
-package com.github.dchristofolli.dropbox.server;
+package com.github.dchristofolli.dropbox.services;
 
 import com.github.dchristofolli.dropbox.ftp.FtpUser;
 import com.github.dchristofolli.dropbox.ftp.FtpLogin;
@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class ServerConfig {
+public class FtpService {
 
 
     private FtpServer server;

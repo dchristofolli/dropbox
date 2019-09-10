@@ -1,11 +1,15 @@
 package com.github.dchristofolli.dropbox.controllers;
 
+import com.github.dchristofolli.dropbox.models.FileInput;
+import com.github.dchristofolli.dropbox.models.UserInput;
 import com.github.dchristofolli.dropbox.services.FileService;
+import com.github.dchristofolli.dropbox.services.FtpConnect;
 import com.github.dchristofolli.dropbox.services.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.apache.commons.net.ftp.FTPClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -61,13 +65,12 @@ public class FileController {
         return new ResponseEntity(null, HttpStatus.OK);
     }
 
-//    @ApiOperation("Lista de arquivos por página")
-//    @GetMapping("/{idUsuario}")
-//    public Page<FileInput> listaPaginada(@PathVariable String idUsuario,
-//                                         @PathVariable Integer pagina,
-//                                         @PathVariable Integer quantidade){
-//        UserInput user = userService.listarPorId(idUsuario).get();
-//        return fileService.listaPaginada(pagina, quantidade, user);
-//    }
-
+    @ApiOperation("Lista paginada de arquivos")
+    @GetMapping("/usuarios/{usuario}/paginas/{pagina}/arquivos/{quantidade}")
+    public Page<FileInput> listaPaginada(@PathVariable int pagina,
+                                         @PathVariable int quantidade,
+                                         @PathVariable String usuario) {
+        UserInput userInput = userService.listarPorId(usuario).get();
+        return fileService.listaPaginada(pagina, quantidade, userInput);
+    }
 }

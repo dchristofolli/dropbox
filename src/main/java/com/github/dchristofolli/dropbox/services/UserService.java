@@ -1,6 +1,6 @@
         package com.github.dchristofolli.dropbox.services;
 
-        import com.github.dchristofolli.dropbox.controllers.UserInput;
+        import com.github.dchristofolli.dropbox.models.UserInput;
         import com.github.dchristofolli.dropbox.ftp.FtpUser;
         import com.github.dchristofolli.dropbox.repositories.UserRepository;
         import org.springframework.beans.factory.annotation.Autowired;

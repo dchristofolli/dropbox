@@ -1,5 +1,6 @@
 package com.github.dchristofolli.dropbox.controllers;
 
+import com.github.dchristofolli.dropbox.models.UserInput;
 import com.github.dchristofolli.dropbox.services.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

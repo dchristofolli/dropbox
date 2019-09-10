@@ -1,4 +1,4 @@
-package com.github.dchristofolli.dropbox.controllers;
+package com.github.dchristofolli.dropbox.models;
 
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.data.annotation.Id;

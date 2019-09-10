@@ -1,4 +1,4 @@
-package com.github.dchristofolli.dropbox.controllers;
+package com.github.dchristofolli.dropbox.models;
 
 import org.apache.commons.net.ftp.FTPFile;
 import org.springframework.beans.factory.annotation.Autowired;
