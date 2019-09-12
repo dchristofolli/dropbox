@@ -11,7 +11,7 @@ public class StartServer {
     public static void run(){
         ftpService.start();
     }
-    public void restart(){
+    public static void restart(){
         ftpService.stop();
         ftpService.start();
     }

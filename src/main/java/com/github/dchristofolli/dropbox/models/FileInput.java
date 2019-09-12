@@ -11,6 +11,7 @@ public class FileInput {
 
     @Autowired
     UserInput userInput;
+
     public FileInput(FTPFile arquivoFTP) {
         this.setNomeArquivo(arquivoFTP.getName());
         this.setTamanhoArquivo(arquivoFTP.getSize() + " kb");

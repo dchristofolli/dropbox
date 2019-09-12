@@ -1,13 +1,13 @@
-        package com.github.dchristofolli.dropbox.services;
+package com.github.dchristofolli.dropbox.services;
 
-        import com.github.dchristofolli.dropbox.models.UserInput;
-        import com.github.dchristofolli.dropbox.ftp.FtpUser;
-        import com.github.dchristofolli.dropbox.repositories.UserRepository;
-        import org.springframework.beans.factory.annotation.Autowired;
-        import org.springframework.stereotype.Service;
+import com.github.dchristofolli.dropbox.ftp.FtpUser;
+import com.github.dchristofolli.dropbox.models.UserInput;
+import com.github.dchristofolli.dropbox.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-        import java.util.List;
-        import java.util.Optional;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -25,8 +25,7 @@ public class UserService {
     public UserInput cadastrar(UserInput myUserInput) {
         FtpUser.salvaUsuario(myUserInput.getNome(), myUserInput.getSenha());
         userRepository.save(myUserInput);
-        UserInput usuario = new UserInput();
-        return usuario;
+        return new UserInput();
     }
 
     public UserInput atualizar(UserInput userInput) {
@@ -37,10 +36,13 @@ public class UserService {
         this.userRepository.deleteById(id);
     }
 
-    public UserInput permiteVisitante(String idUsuario, String idVisitante) {
-        Optional<UserInput> userInput = userRepository.findById(idUsuario);
-        UserInput user = userInput.get();
-        user.getSeguidores().add(idVisitante);
-        return cadastrar(user);
-    }
+//    public UserInput permiteVisitante(String idUsuario, String idVisitante) {
+//        if(userRepository.existsById(idUsuario)){
+//            Optional<UserInput> userInput = userRepository.findById(idUsuario);
+//            UserInput user = userInput.get();
+//            user.getSeguidores().add(idVisitante);
+//            return atualizar(user);
+//        }
+//        return null;
+//    }
 }

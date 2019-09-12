@@ -16,7 +16,7 @@ public class FtpUser {
     private static String senhaUsuario;
 
 
-    public static UserManager criaUserManager() {
+    public static UserManager mantemProperties() {
         PropertiesUserManagerFactory umf = new PropertiesUserManagerFactory();
         try {
             new File("users.properties").createNewFile();
@@ -29,7 +29,7 @@ public class FtpUser {
 
 
     public static void salvaUsuario(String nome, String senha) {
-        UserManager userManager = criaUserManager();
+        UserManager userManager = mantemProperties();
 
         List<Authority> authorities = new ArrayList<>();
         authorities.add(new WritePermission());
@@ -67,7 +67,7 @@ public class FtpUser {
     public static boolean verificaUsuario(String nome) {
         User usuario = null;
         try {
-            usuario = criaUserManager().getUserByName(nome);
+            usuario = mantemProperties().getUserByName(nome);
         } catch (FtpException e) {
             e.getMessage();
         }

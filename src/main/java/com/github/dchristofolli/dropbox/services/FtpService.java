@@ -35,7 +35,7 @@ public class FtpService {
         serverFactory.addListener("default", listenerFactory.createListener());
         serverFactory.setFtplets(map);
         serverFactory.setConnectionConfig(connectionConfigFactory.createConnectionConfig());
-        serverFactory.setUserManager(FtpUser.criaUserManager());
+        serverFactory.setUserManager(FtpUser.mantemProperties());
         server = serverFactory.createServer();
 
         try {

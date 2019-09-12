@@ -3,13 +3,11 @@ package com.github.dchristofolli.dropbox.controllers;
 import com.github.dchristofolli.dropbox.models.FileInput;
 import com.github.dchristofolli.dropbox.models.UserInput;
 import com.github.dchristofolli.dropbox.services.FileService;
-import com.github.dchristofolli.dropbox.services.FtpConnect;
 import com.github.dchristofolli.dropbox.services.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.apache.commons.net.ftp.FTPClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -18,8 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Optional;
 
 @Api
 @RestController
@@ -34,42 +30,50 @@ public class FileController {
 
     @ApiOperation("Envia o arquivo para o servidor FTP")
     @ApiResponses({
-            @ApiResponse(code=200, message = "Ok"),
-            @ApiResponse(code=201, message = "Arquivo enviado"),
-            @ApiResponse(code=202, message = "Alguma coisa deu errado"),
-            @ApiResponse(code=401, message = "Não autorizado"),
-            @ApiResponse(code=403, message = "Acesso restrito"),
-            @ApiResponse(code=404, message = "Página não encontrada :(")
+            @ApiResponse(code = 200, message = "Ok"),
+            @ApiResponse(code = 201, message = "Arquivo enviado"),
+            @ApiResponse(code = 202, message = "Arquivo enviado. Aguardando resposta do servidor"),
+            @ApiResponse(code = 401, message = "Não autorizado"),
+            @ApiResponse(code = 403, message = "Acesso restrito"),
+            @ApiResponse(code = 404, message = "Página não encontrada :(")
     })
     @PostMapping("/{idUsuario}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public ResponseEntity envioArquivo(@RequestParam("Arquivo") MultipartFile arquivo,
                                        @PathVariable String idUsuario) {
         UserInput user = userService.listarPorId(idUsuario).get();
-            fileService.enviar(arquivo, user);
-            return new ResponseEntity(null, HttpStatus.ACCEPTED);
+        fileService.enviar(arquivo, user);
+        return new ResponseEntity(null, HttpStatus.ACCEPTED);
     }
 
-    @ApiOperation("Exibe uma lista dos arquivos do usuário")
-    @GetMapping("{idUsuario}")
-    public ArrayList<FileInput> listaArquivos(@PathVariable String idUsuario){
-        Optional<UserInput> user = userService.listarPorId(idUsuario);
-        return fileService.listarArquivosDoUsuario(user.get());
-    }
     @ApiOperation("Exclui um arquivo de um usuário no servidor FTP")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Arquivo excluído"),
+            @ApiResponse(code = 204, message = "Arquivo não encontrado"),
+            @ApiResponse(code = 401, message = "Solicitação não autorizada"),
+            @ApiResponse(code = 403, message = "Usuário não possui permissão")
+    })
     @DeleteMapping("/{idUsuario}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity excluiArquivo(@PathVariable String idUsuario, String arquivo) throws IOException {
         UserInput user = userService.listarPorId(idUsuario).get();
         fileService.deletar(arquivo, user);
+
         return new ResponseEntity(null, HttpStatus.OK);
     }
 
     @ApiOperation("Lista paginada de arquivos")
-    @GetMapping("/usuarios/{usuario}/paginas/{pagina}/arquivos/{quantidade}")
-    public Page<FileInput> listaPaginada(@PathVariable int pagina,
-                                         @PathVariable int quantidade,
-                                         @PathVariable String usuario) {
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Lista exibida com sucesso"),
+            @ApiResponse(code = 401, message = "Solicitação não autorizada"),
+            @ApiResponse(code = 403, message = "Usuário não possui permissão"),
+            @ApiResponse(code = 404, message = "Página não encontrada")
+    })
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(method = RequestMethod.GET)
+    public Page<FileInput> listaPaginada(@RequestParam(defaultValue = "1") int pagina,
+                                         @RequestParam(defaultValue = "5") int quantidade,
+                                         @RequestParam(defaultValue = "5d78e7cbc7d0524eba5ad341") String usuario) {
         UserInput userInput = userService.listarPorId(usuario).get();
         return fileService.listaPaginada(pagina, quantidade, userInput);
     }
