@@ -3,6 +3,7 @@ package com.github.dchristofolli.dropbox.models;
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -10,27 +11,28 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
+@Service
 @Document
 public class UserInput {
     @Id
     private String id;
     @NotNull(message = "O nome deve ser preenchido")
     private String nome;
-    @CPF (message = "CPF inválido")
+    @CPF(message = "CPF inválido")
     private String cpf;
-    @Email (message = "E-mail inválido")
+    @Email(message = "E-mail inválido")
     private String email;
-    private List<String> seguidores;
+    private String seguidores;
     @NotBlank(message = "A senha deve ser preenchida")
-    @Size(min=4, message = "A senha deve ter pelo menos 4 caracteres")
+    @Size(min = 4, message = "A senha deve ter pelo menos 4 caracteres")
     private String senha;
 
-    public UserInput(){
+    public UserInput() {
     }
 
     public UserInput(String id, @NotNull(message = "O nome deve ser preenchido") String nome,
                      @CPF(message = "CPF inválido") String cpf,
-                     @Email(message = "E-mail inválido") String email, List<String> seguidores,
+                     @Email(message = "E-mail inválido") String email, String seguidores,
                      @NotBlank(message = "A senha deve ser preenchida")
                      @Size(min = 4, message = "A senha deve ter pelo menos 4 caracteres") String senha) {
         this.id = id;
@@ -81,11 +83,11 @@ public class UserInput {
         this.senha = senha;
     }
 
-    public List<String> getSeguidores() {
+    public String getSeguidores() {
         return seguidores;
     }
 
-    public void setSeguidores(List<String> seguidores) {
+    public void setSeguidores(String seguidores) {
         this.seguidores = seguidores;
     }
 }

@@ -41,8 +41,8 @@ public class UserController {
             @ApiResponse(code = 403, message = "Acesso negado"),
             @ApiResponse(code = 404, message = "Usuário não encontrado"),
             @ApiResponse(code = 500, message = "Ocorreu um erro no servidor")})
-    @GetMapping(path = "/{id}")
-    public Optional<UserInput> listarPorId(@PathVariable(name = "id") String id) {
+    @RequestMapping(method = RequestMethod.GET, path = "id/")
+    public Optional<UserInput> listarPorId(@RequestParam(defaultValue = "5d78e7cbc7d0524eba5ad341") String id) {
         return userService.listarPorId(id);
     }
 
@@ -81,17 +81,17 @@ public class UserController {
             @ApiResponse(code = 403, message = "Acesso negado"),
             @ApiResponse(code = 500, message = "Ocorreu um erro no servidor")})
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<String> remover(@PathVariable(name = "id") String id) {
+    public ResponseEntity<String> remover(@PathVariable String id) {
         this.userService.remover(id);
         return ResponseEntity.ok("Usuário removido");
     }
 
-//    @ApiOperation("Permite que outro usuário tenha acesso aos arquivos")
-//    @ApiResponses({
-//    })
-//    @PutMapping("/{idUsuario}/{idVisitante}")
-//    public ResponseEntity<UserInput> adicionaVisitante(@PathVariable String idUsuario,
-//                                                       @PathVariable String idVisitante) {
-//        return ResponseEntity.ok(userService.permiteVisitante(idUsuario, idVisitante));
-//    }
+    @ApiOperation("Permite que outro usuário tenha acesso aos arquivos")
+    @ApiResponses({
+    })
+    @RequestMapping(method = RequestMethod.PUT)
+    public ResponseEntity<UserInput> adicionaVisitante(@RequestParam String idUsuario,
+                                                       @RequestParam String idVisitante) {
+        return ResponseEntity.ok(userService.permiteVisitante(idUsuario, idVisitante));
+    }
 }

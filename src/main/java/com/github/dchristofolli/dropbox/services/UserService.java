@@ -36,13 +36,13 @@ public class UserService {
         this.userRepository.deleteById(id);
     }
 
-//    public UserInput permiteVisitante(String idUsuario, String idVisitante) {
-//        if(userRepository.existsById(idUsuario)){
-//            Optional<UserInput> userInput = userRepository.findById(idUsuario);
-//            UserInput user = userInput.get();
-//            user.getSeguidores().add(idVisitante);
-//            return atualizar(user);
-//        }
-//        return null;
-//    }
+    public UserInput permiteVisitante(String idUsuario, String idVisitante) {
+        if (userRepository.existsById(idUsuario)) {
+            Optional<UserInput> userInput = userRepository.findById(idUsuario);
+            UserInput user = userInput.get();
+            user.setSeguidores(idVisitante);
+            return atualizar(user);
+        }
+        return null;
+    }
 }

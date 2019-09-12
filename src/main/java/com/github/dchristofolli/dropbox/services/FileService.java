@@ -10,8 +10,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class FileService {
@@ -34,6 +37,33 @@ public class FileService {
         return conexao.deleteFile(arquivo);
     }
 
+    public void download(String arquivo, String userId) throws FileNotFoundException {
+        if(usuarioExiste(userId)){
+            UserInput user = userService.listarPorId(userId).get();
+            FTPClient conexao = FtpConnect.conexao(user.getNome(), user.getSenha());
+            FileOutputStream local = new FileOutputStream("/Downloads");
+            try {
+                FTPFile[] arquivos = conexao.listFiles();
+                for (FTPFile ftp : arquivos) {
+                    if (arquivo.equals(ftp)) {
+                        conexao.retrieveFile(arquivo, local);
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private boolean usuarioExiste(String userId) {
+        List<UserInput> users = userService.listarUsers();
+        UserInput user = userService.listarPorId(userId).get();
+        if (users.contains(user)) {
+            return true;
+        }
+        return false;
+    }
+
     public ArrayList<FileInput> listarArquivosDoUsuario(UserInput user) {
         FTPClient conexao = FtpConnect.conexao(user.getNome(), user.getSenha());
         try {
@@ -53,4 +83,13 @@ public class FileService {
     public Page<FileInput> listaPaginada(int pagina, int quantidade, UserInput user) {
         return FtpConnect.paginacao(listarArquivosDoUsuario(user), pagina, quantidade);
     }
+
+    public Page<FileInput> listaCompartilhadosComigo(int pagina, int quantidade, UserInput user) {
+        if (user.getSeguidores() != null) {
+            return FtpConnect.paginacao(listarArquivosDoUsuario(userService.listarPorId(user.getSeguidores()).
+                    get()), pagina, quantidade);
+        }
+        return null;
+    }
+
 }

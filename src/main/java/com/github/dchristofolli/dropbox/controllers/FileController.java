@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 @Api
@@ -76,5 +77,31 @@ public class FileController {
                                          @RequestParam(defaultValue = "5d78e7cbc7d0524eba5ad341") String usuario) {
         UserInput userInput = userService.listarPorId(usuario).get();
         return fileService.listaPaginada(pagina, quantidade, userInput);
+    }
+
+    @ApiOperation("Lista paginada de arquivos compartilhados comigo")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Lista exibida com sucesso"),
+            @ApiResponse(code = 401, message = "Solicitação não autorizada"),
+            @ApiResponse(code = 403, message = "Usuário não possui permissão"),
+            @ApiResponse(code = 404, message = "Página não encontrada")
+    })
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(method = RequestMethod.GET, path = "/compartilhados")
+    public ResponseEntity<Page<FileInput>> listaCompartilhadosComigo(@RequestParam(defaultValue = "1") int pagina,
+                                         @RequestParam(defaultValue = "5") int quantidade,
+                                         @RequestParam(defaultValue = "5d78e7cbc7d0524eba5ad341") String usuario) {
+        UserInput userInput = userService.listarPorId(usuario).get();
+            return ResponseEntity.ok(fileService.listaCompartilhadosComigo(pagina, quantidade, userInput));
+    }
+
+    @ApiOperation("Faz o download do arquivo para a máquina local")
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(method = RequestMethod.GET, path = "/download")
+    public ResponseEntity baixarArquivo(@RequestParam String id,
+                                        @RequestParam String arquivo) throws FileNotFoundException {
+        UserInput user = userService.listarPorId(id).get();
+        fileService.download(user.getNome(), arquivo);
+        return new ResponseEntity(null, HttpStatus.OK);
     }
 }

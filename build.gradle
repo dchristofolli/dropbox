@@ -1,12 +1,11 @@
 plugins {
-    id 'org.springframework.boot' version '2.1.7.RELEASE'
+    id 'org.springframework.boot' version '2.1.8.RELEASE'
     id 'java'
 }
 
 apply plugin: 'io.spring.dependency-management'
 group = 'com.github.dchristofolli'
 version = '1'
-sourceCompatibility = '11'
 configurations {
     developmentOnly
     runtimeClasspath {
