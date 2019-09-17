@@ -6,6 +6,8 @@ import com.github.dchristofolli.dropbox.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,8 +16,11 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<UserInput> listarUsers() {
-        return this.userRepository.findAll();
+    public Optional<List<UserInput>> listarUsers() {
+        if (userRepository.count() > 0) {
+            return Optional.ofNullable(this.userRepository.findAll());
+        }
+        return null;
     }
 
     public Optional<UserInput> listarPorId(String id) {
@@ -32,8 +37,10 @@ public class UserService {
         return this.userRepository.save(userInput);
     }
 
+    @NotNull
     public void remover(String id) {
-        this.userRepository.deleteById(id);
+            this.userRepository.deleteById(id);
+
     }
 
     public UserInput permiteVisitante(String idUsuario, String idVisitante) {

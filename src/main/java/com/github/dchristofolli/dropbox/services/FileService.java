@@ -15,6 +15,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FileService {
@@ -56,11 +57,9 @@ public class FileService {
     }
 
     private boolean usuarioExiste(String userId) {
-        List<UserInput> users = userService.listarUsers();
+        Optional<List<UserInput>> users = userService.listarUsers();
         UserInput user = userService.listarPorId(userId).get();
-        if (users.contains(user)) {
-            return true;
-        }
+        Optional<Boolean> userOfNullable = Optional.ofNullable(users.map(p -> p.equals(user)).isPresent());
         return false;
     }
 
@@ -84,7 +83,7 @@ public class FileService {
         return FtpConnect.paginacao(listarArquivosDoUsuario(user), pagina, quantidade);
     }
 
-    public Page<FileInput> listaCompartilhadosComigo(int pagina, int quantidade, UserInput user) {
+    public Page<FileInput> listaCompartilhadosComigo(int pagina, int quantidade, UserInput user) { // não está funcionando
         if (user.getSeguidores() != null) {
             return FtpConnect.paginacao(listarArquivosDoUsuario(userService.listarPorId(user.getSeguidores()).
                     get()), pagina, quantidade);

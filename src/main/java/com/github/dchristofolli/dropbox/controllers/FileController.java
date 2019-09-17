@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Optional;
 
 @Api
 @RestController
@@ -89,10 +90,10 @@ public class FileController {
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET, path = "/compartilhados")
     public ResponseEntity<Page<FileInput>> listaCompartilhadosComigo(@RequestParam(defaultValue = "1") int pagina,
-                                         @RequestParam(defaultValue = "5") int quantidade,
-                                         @RequestParam(defaultValue = "5d78e7cbc7d0524eba5ad341") String usuario) {
+                                                                     @RequestParam(defaultValue = "5") int quantidade,
+                                                                     @RequestParam(defaultValue = "5d78e7cbc7d0524eba5ad341") String usuario) {
         UserInput userInput = userService.listarPorId(usuario).get();
-            return ResponseEntity.ok(fileService.listaCompartilhadosComigo(pagina, quantidade, userInput));
+        return ResponseEntity.ok(fileService.listaCompartilhadosComigo(pagina, quantidade, userInput));
     }
 
     @ApiOperation("Faz o download do arquivo para a máquina local")

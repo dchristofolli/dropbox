@@ -31,7 +31,7 @@ public class UserController {
             @ApiResponse(code = 500, message = "Ocorreu um erro no servidor")})
     @GetMapping
     public ResponseEntity<List<UserInput>> listarTodos() {
-        return ResponseEntity.ok(this.userService.listarUsers());
+        return ResponseEntity.ok(this.userService.listarUsers().get());
     }
 
     @ApiOperation("Busca o usuário através do ID")

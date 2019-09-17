@@ -27,15 +27,22 @@ dependencies {
     compile 'org.mongodb:mongodb-driver-sync:3.10.2'
     compile 'commons-net:commons-net:3.6'
     compile group: 'org.apache.ftpserver', name: 'ftplet-api', version: '1.1.1'
+    compile group: 'org.apache.ftpserver', name: 'ftplet-api', version: '1.1.1'
     implementation group: 'org.apache.ftpserver', name: 'ftpserver-core',
             compile("org.springframework.boot:spring-boot-devtools")
+
     testCompile 'org.springframework.boot:spring-boot-starter-test'
     testCompile "org.mockito:mockito-core:1.+"
-
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.0.2'
+    testRuntime 'org.junit.jupiter:junit-jupiter-engine:5.0.2'
     implementation group: 'org.apache.ftpserver', name: 'ftpserver-core', version: '1.1.1'
-    compile group: 'org.apache.ftpserver', name: 'ftplet-api', version: '1.1.1'
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
 }
