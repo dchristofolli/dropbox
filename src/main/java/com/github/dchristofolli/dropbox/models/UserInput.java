@@ -22,7 +22,7 @@ public class UserInput {
     private String cpf;
     @Email(message = "E-mail inválido")
     private String email;
-    private String seguidores;
+    private String seguidor;
     @NotBlank(message = "A senha deve ser preenchida")
     @Size(min = 4, message = "A senha deve ter pelo menos 4 caracteres")
     private String senha;
@@ -32,14 +32,14 @@ public class UserInput {
 
     public UserInput(String id, @NotNull(message = "O nome deve ser preenchido") String nome,
                      @CPF(message = "CPF inválido") String cpf,
-                     @Email(message = "E-mail inválido") String email, String seguidores,
+                     @Email(message = "E-mail inválido") String email, String seguidor,
                      @NotBlank(message = "A senha deve ser preenchida")
                      @Size(min = 4, message = "A senha deve ter pelo menos 4 caracteres") String senha) {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
         this.email = email;
-        this.seguidores = seguidores;
+        this.seguidor = seguidor;
         this.senha = senha;
     }
 
@@ -83,11 +83,11 @@ public class UserInput {
         this.senha = senha;
     }
 
-    public String getSeguidores() {
-        return seguidores;
+    public String getSeguidor() {
+        return seguidor;
     }
 
-    public void setSeguidores(String seguidores) {
-        this.seguidores = seguidores;
+    public void setSeguidor(String seguidor) {
+        this.seguidor = seguidor;
     }
 }

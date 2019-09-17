@@ -74,7 +74,7 @@ public class FileService {
             return fileInputs;
         } catch (IOException e) {
             e.getMessage();
-            return listarArquivosDoUsuario(null);
+            return null;
         }
     }
 
@@ -82,12 +82,8 @@ public class FileService {
         return FtpConnect.paginacao(listarArquivosDoUsuario(user), pagina, quantidade);
     }
 
-    public Page<FileInput> listaCompartilhadosComigo(int pagina, int quantidade, UserInput user) { // não está funcionando
-        if (user.getSeguidores() != null) {
-            return FtpConnect.paginacao(listarArquivosDoUsuario(userService.listarPorId(user.getSeguidores()).
-                    get()), pagina, quantidade);
-        }
-        return null;
+    public Page<FileInput> listaCompartilhadosComigo(int pagina, int quantidade, UserInput user){
+        UserInput seguidor = userService.listarPorId(user.getSeguidor()).get();
+        return FtpConnect.paginacao(listarArquivosDoUsuario(seguidor), pagina, quantidade);
     }
-
 }

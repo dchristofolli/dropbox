@@ -91,7 +91,7 @@ public class FileController {
     @RequestMapping(method = RequestMethod.GET, path = "/compartilhados")
     public ResponseEntity<Page<FileInput>> listaCompartilhadosComigo(@RequestParam(defaultValue = "1") int pagina,
                                                                      @RequestParam(defaultValue = "5") int quantidade,
-                                                                     @RequestParam(defaultValue = "5d78e7cbc7d0524eba5ad341") String usuario) {
+                                                                     @RequestParam(defaultValue = "5d80e38e80328f4fa957feb4") String usuario) {
         UserInput userInput = userService.listarPorId(usuario).get();
         return ResponseEntity.ok(fileService.listaCompartilhadosComigo(pagina, quantidade, userInput));
     }
