@@ -22,14 +22,13 @@ class UserControllerTest {
     private MessageSource messageSource;
     private UserRepository userRepository;
     private UserService userService;
-    private UserInput userInput;
     private CreateUsers createUsers;
 
     @BeforeEach
     void setUp() {
         messageSource = mock(MessageSource.class);
         userRepository = mock(UserRepository.class);
-        userService = new UserService();
+        userService = new UserService(userRepository);
         createUsers = new CreateUsers();
 
     }
@@ -38,7 +37,7 @@ class UserControllerTest {
     void listarTodos() {
         UserInput user = new UserInput();
         when(userService.listarUsers()).
-                thenReturn(Optional.ofNullable(createUsers.criaListaDeUsuarios()));
+                thenReturn(createUsers.criaListaDeUsuarios());
     }
 
     @Test

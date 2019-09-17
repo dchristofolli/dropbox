@@ -17,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Optional;
 
 @Api
 @RestController
@@ -43,7 +42,8 @@ public class FileController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     public ResponseEntity envioArquivo(@RequestParam("Arquivo") MultipartFile arquivo,
                                        @PathVariable String idUsuario) {
-        UserInput user = userService.listarPorId(idUsuario).get();
+        UserInput user;
+        user = userService.listarPorId(idUsuario).get();
         fileService.enviar(arquivo, user);
         return new ResponseEntity(null, HttpStatus.ACCEPTED);
     }

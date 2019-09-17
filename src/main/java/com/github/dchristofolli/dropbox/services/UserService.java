@@ -12,13 +12,18 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+
 public class UserService {
-    @Autowired
+
     private UserRepository userRepository;
 
-    public Optional<List<UserInput>> listarUsers() {
-        if (userRepository.count() > 0) {
-            return Optional.ofNullable(this.userRepository.findAll());
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    public List<UserInput> listarUsers() {
+        if (userRepository != null) {
+            return this.userRepository.findAll();
         }
         return null;
     }

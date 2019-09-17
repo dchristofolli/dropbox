@@ -57,9 +57,8 @@ public class FileService {
     }
 
     private boolean usuarioExiste(String userId) {
-        Optional<List<UserInput>> users = userService.listarUsers();
+        List<UserInput> users = userService.listarUsers();
         UserInput user = userService.listarPorId(userId).get();
-        Optional<Boolean> userOfNullable = Optional.ofNullable(users.map(p -> p.equals(user)).isPresent());
         return false;
     }
 
