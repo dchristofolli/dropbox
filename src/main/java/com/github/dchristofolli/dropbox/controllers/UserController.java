@@ -41,7 +41,7 @@ public class UserController {
             @ApiResponse(code = 403, message = "Acesso negado"),
             @ApiResponse(code = 404, message = "Usuário não encontrado"),
             @ApiResponse(code = 500, message = "Ocorreu um erro no servidor")})
-    @RequestMapping(method = RequestMethod.GET, path = "id/")
+    @RequestMapping(method = RequestMethod.GET, path = "/id")
     public Optional<UserInput> listarPorId(@RequestParam(defaultValue = "5d80e3f880328f4fa957feb5") String id) {
         return userService.listarPorId(id);
     }

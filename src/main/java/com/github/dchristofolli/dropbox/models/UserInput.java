@@ -10,7 +10,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-
 @Service
 @Document
 public class UserInput {
@@ -89,5 +88,12 @@ public class UserInput {
 
     public void setSeguidor(String seguidor) {
         this.seguidor = seguidor;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        UserInput user = (UserInput) obj;
+        return this.email.equals(user.getEmail())
+                || this.id.equals(user.getId());
     }
 }

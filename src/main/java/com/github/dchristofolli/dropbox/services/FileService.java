@@ -10,12 +10,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class FileService {
@@ -38,28 +36,14 @@ public class FileService {
         return conexao.deleteFile(arquivo);
     }
 
-    public void download(String arquivo, String userId) throws FileNotFoundException {
-        if(usuarioExiste(userId)){
-            UserInput user = userService.listarPorId(userId).get();
-            FTPClient conexao = FtpConnect.conexao(user.getNome(), user.getSenha());
-            FileOutputStream local = new FileOutputStream("/Downloads");
-            try {
-                FTPFile[] arquivos = conexao.listFiles();
-                for (FTPFile ftp : arquivos) {
-                    if (arquivo.equals(ftp)) {
-                        conexao.retrieveFile(arquivo, local);
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private boolean usuarioExiste(String userId) {
+    public void download(UserInput usuario, String arquivo) throws IOException {
         List<UserInput> users = userService.listarUsers();
-        UserInput user = userService.listarPorId(userId).get();
-        return false;
+        if (users.contains(usuario)) {
+            FTPClient ftpClient = FtpConnect.conexao(usuario.getNome(), usuario.getSenha());
+            FileOutputStream fileOutputStream;
+            fileOutputStream = new FileOutputStream("/home/dchristofolli/DownloadsFTP/" + arquivo);
+            ftpClient.retrieveFile(arquivo, fileOutputStream);
+        }
     }
 
     public ArrayList<FileInput> listarArquivosDoUsuario(UserInput user) {
@@ -82,8 +66,14 @@ public class FileService {
         return FtpConnect.paginacao(listarArquivosDoUsuario(user), pagina, quantidade);
     }
 
-    public Page<FileInput> listaCompartilhadosComigo(int pagina, int quantidade, UserInput user){
+    public Page<FileInput> listaCompartilhadosComigo(int pagina, int quantidade, UserInput user) {
+        String seguidorAux = user.getSeguidor();
+        UserInput seguidor = userService.listarPorId(seguidorAux).get();
+        return listaPaginada(pagina, quantidade, seguidor);
+    }
+
+    public void downloadCompartilhadosComigo(String arquivo, UserInput user) throws IOException {
         UserInput seguidor = userService.listarPorId(user.getSeguidor()).get();
-        return FtpConnect.paginacao(listarArquivosDoUsuario(seguidor), pagina, quantidade);
+        download(seguidor, arquivo);
     }
 }

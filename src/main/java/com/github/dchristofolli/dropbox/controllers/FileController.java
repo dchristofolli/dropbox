@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 @Api
@@ -38,14 +37,14 @@ public class FileController {
             @ApiResponse(code = 403, message = "Acesso restrito"),
             @ApiResponse(code = 404, message = "Página não encontrada :(")
     })
-    @PostMapping("/{idUsuario}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public ResponseEntity envioArquivo(@RequestParam("Arquivo") MultipartFile arquivo,
-                                       @PathVariable String idUsuario) {
+    @RequestMapping(method = RequestMethod.POST, path = "/arquivos")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity envioArquivo(@RequestParam MultipartFile arquivo,
+                                       @RequestParam String idUsuario) {
         UserInput user;
         user = userService.listarPorId(idUsuario).get();
         fileService.enviar(arquivo, user);
-        return new ResponseEntity(null, HttpStatus.ACCEPTED);
+        return new ResponseEntity(null, HttpStatus.OK);
     }
 
     @ApiOperation("Exclui um arquivo de um usuário no servidor FTP")
@@ -97,12 +96,34 @@ public class FileController {
     }
 
     @ApiOperation("Faz o download do arquivo para a máquina local")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Arquivo baixado com sucesso"),
+            @ApiResponse(code = 401, message = "Download não autorizado"),
+            @ApiResponse(code = 403, message = "Operação não permitida para o usuário"),
+            @ApiResponse(code = 404, message = "Página não encontrada")
+    })
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET, path = "/download")
     public ResponseEntity baixarArquivo(@RequestParam String id,
-                                        @RequestParam String arquivo) throws FileNotFoundException {
+                                        @RequestParam String arquivo) {
         UserInput user = userService.listarPorId(id).get();
-        fileService.download(user.getNome(), arquivo);
+        fileService.download(user, arquivo);
+        return new ResponseEntity(null, HttpStatus.OK);
+    }
+
+    @ApiOperation("Baixa um arquivo compartilhado comigo")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Arquivo baixado com sucesso"),
+            @ApiResponse(code = 401, message = "Download não autorizado"),
+            @ApiResponse(code = 403, message = "Operação não permitida para o usuário"),
+            @ApiResponse(code = 404, message = "Página não encontrada")
+    })
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(method = RequestMethod.GET, path = "compartilhadoComigo/download")
+    public ResponseEntity baixarCompartilhadoComigo(@RequestParam String id,
+                                                    @RequestParam String arquivo) {
+        UserInput userInput = userService.listarPorId(id).get();
+        fileService.downloadCompartilhadosComigo(arquivo, userInput);
         return new ResponseEntity(null, HttpStatus.OK);
     }
 }

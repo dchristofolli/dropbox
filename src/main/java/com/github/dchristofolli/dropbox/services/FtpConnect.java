@@ -12,7 +12,6 @@ import java.util.List;
 
 @Service
 public class FtpConnect {
-
     static FTPClient conexao(String user, String pass) {
         FTPClient ftpClient = new FTPClient();
         try {
@@ -23,10 +22,11 @@ public class FtpConnect {
         }
         return ftpClient;
     }
+
     public static Page<FileInput> paginacao(ArrayList<FileInput> files,
-                                            int pagina, int qtPorPagina){
+                                            int pagina, int qtPorPagina) {
         List<FileInput> lista = new ArrayList<>();
-        for (FileInput f: files){
+        for (FileInput f : files) {
             lista.add(f);
         }
         Page<FileInput> filePages = new PageImpl<>(lista);

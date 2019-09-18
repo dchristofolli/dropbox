@@ -34,10 +34,18 @@ public class UserService {
         return null;
     }
 
+    public boolean userExistsById(String usuario){
+        List<UserInput> users = listarUsers();
+        if (users.contains(usuario)){
+            return true;
+        }
+        return false;
+    }
+
     public UserInput cadastrar(UserInput userInput) {
-        FtpUser.salvaUsuario(userInput.getNome(), userInput.getSenha());
+        FtpUser.salvaUsuario(userInput.getNome().toLowerCase(), userInput.getSenha());
         userRepository.save(userInput);
-        return new UserInput();
+        return userInput;
     }
 
     public UserInput atualizar(UserInput userInput) {
