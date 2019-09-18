@@ -105,7 +105,7 @@ public class FileController {
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET, path = "/download")
     public ResponseEntity baixarArquivo(@RequestParam String id,
-                                        @RequestParam String arquivo) {
+                                        @RequestParam String arquivo) throws IOException {
         UserInput user = userService.listarPorId(id).get();
         fileService.download(user, arquivo);
         return new ResponseEntity(null, HttpStatus.OK);
@@ -121,7 +121,7 @@ public class FileController {
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET, path = "compartilhadoComigo/download")
     public ResponseEntity baixarCompartilhadoComigo(@RequestParam String id,
-                                                    @RequestParam String arquivo) {
+                                                    @RequestParam String arquivo) throws IOException {
         UserInput userInput = userService.listarPorId(id).get();
         fileService.downloadCompartilhadosComigo(arquivo, userInput);
         return new ResponseEntity(null, HttpStatus.OK);
