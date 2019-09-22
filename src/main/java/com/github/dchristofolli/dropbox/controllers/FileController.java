@@ -52,7 +52,8 @@ public class FileController {
             @ApiResponse(code = 200, message = "Arquivo excluído"),
             @ApiResponse(code = 204, message = "Arquivo não encontrado"),
             @ApiResponse(code = 401, message = "Solicitação não autorizada"),
-            @ApiResponse(code = 403, message = "Usuário não possui permissão")
+            @ApiResponse(code = 403, message = "Usuário não possui permissão"),
+            @ApiResponse(code = 404, message = "Usuário não encontrado")
     })
     @DeleteMapping("/{idUsuario}")
     @ResponseStatus(HttpStatus.OK)

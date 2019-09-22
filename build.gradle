@@ -1,9 +1,13 @@
 plugins {
     id 'org.springframework.boot' version '2.1.8.RELEASE'
     id 'java'
+    id "org.sonarqube" version "2.7.1"
 }
 
+apply plugin: 'jacoco'
 apply plugin: 'io.spring.dependency-management'
+
+
 group = 'com.github.dchristofolli'
 version = '1'
 configurations {
@@ -17,22 +21,22 @@ repositories {
     jcenter()
 }
 dependencies {
-    compile 'io.springfox:springfox-swagger-ui:2.9.2'
-    compile 'io.springfox:springfox-swagger2:2.9.2'
-    compile 'org.springframework.boot:spring-boot-starter-data-mongodb'
-    compile 'org.springframework.boot:spring-boot-starter-actuator'
-    compile 'org.springframework.boot:spring-boot-starter-web'
-    compile 'io.springfox:springfox-swagger2:2.9.2'
-    compile 'io.springfox:springfox-swagger-ui:2.9.2'
-    compile 'org.mongodb:mongodb-driver-sync:3.10.2'
-    compile 'commons-net:commons-net:3.6'
-    compile group: 'org.apache.ftpserver', name: 'ftplet-api', version: '1.1.1'
-    compile group: 'org.apache.ftpserver', name: 'ftplet-api', version: '1.1.1'
+    implementation 'io.springfox:springfox-swagger-ui:2.9.2'
+    implementation 'io.springfox:springfox-swagger2:2.9.2'
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'io.springfox:springfox-swagger2:2.9.2'
+    implementation 'io.springfox:springfox-swagger-ui:2.9.2'
+    implementation 'org.mongodb:mongodb-driver-sync:3.10.2'
+    implementation 'commons-net:commons-net:3.6'
+    implementation group: 'org.apache.ftpserver', name: 'ftplet-api', version: '1.1.1'
+    implementation group: 'org.apache.ftpserver', name: 'ftplet-api', version: '1.1.1'
     implementation group: 'org.apache.ftpserver', name: 'ftpserver-core',
             compile("org.springframework.boot:spring-boot-devtools")
 
-    testCompile 'org.springframework.boot:spring-boot-starter-test'
-    testCompile "org.mockito:mockito-core:1.+"
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation "org.mockito:mockito-core:1.+"
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.0.2'
