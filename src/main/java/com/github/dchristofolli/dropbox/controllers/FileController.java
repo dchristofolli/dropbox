@@ -8,24 +8,25 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
+import java.util.Optional;
 
+@AllArgsConstructor
 @Api
 @RestController
 @RequestMapping("/dropbox/arquivos")
 public class FileController {
     // encodar user:password em base64 (ver qual é a classe java que faz isso) e colocar no header na hora de enviar o request
     // solucao mais simples, adicionar um header no request com o id do usuario
-    @Autowired
     UserService userService;
-    @Autowired
     FileService fileService;
 
     @ApiOperation("Envia o arquivo para o servidor FTP")
@@ -37,14 +38,12 @@ public class FileController {
             @ApiResponse(code = 403, message = "Acesso restrito"),
             @ApiResponse(code = 404, message = "Página não encontrada :(")
     })
-    @RequestMapping(method = RequestMethod.POST, path = "/arquivos")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity envioArquivo(@RequestParam MultipartFile arquivo,
+    @PostMapping("/arquivos")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void envioArquivo(@RequestParam MultipartFile arquivo,
                                        @RequestParam String idUsuario) {
-        UserInput user;
-        user = userService.listarPorId(idUsuario).get();
+        UserInput user = userService.listarPorId(idUsuario).get();
         fileService.enviar(arquivo, user);
-        return new ResponseEntity(null, HttpStatus.OK);
     }
 
     @ApiOperation("Exclui um arquivo de um usuário no servidor FTP")
@@ -72,7 +71,7 @@ public class FileController {
             @ApiResponse(code = 404, message = "Página não encontrada")
     })
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public Page<FileInput> listaPaginada(@RequestParam(defaultValue = "1") int pagina,
                                          @RequestParam(defaultValue = "5") int quantidade,
                                          @RequestParam(defaultValue = "5d78e7cbc7d0524eba5ad341") String usuario) {
@@ -88,15 +87,16 @@ public class FileController {
             @ApiResponse(code = 404, message = "Página não encontrada")
     })
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(method = RequestMethod.GET, path = "/compartilhados")
-    public ResponseEntity<Page<FileInput>> listaCompartilhadosComigo(@RequestParam(defaultValue = "1") int pagina,
+    @GetMapping("/compartilhados")
+    public Page<FileInput> listaCompartilhadosComigo(@RequestParam(defaultValue = "1") int pagina,
                                                                      @RequestParam(defaultValue = "5") int quantidade,
                                                                      @RequestParam(defaultValue = "5d80e38e80328f4fa957feb4") String usuario) {
         UserInput userInput = userService.listarPorId(usuario).get();
-        return ResponseEntity.ok(fileService.listaCompartilhadosComigo(pagina, quantidade, userInput));
+        return fileService.listaCompartilhadosComigo(pagina, quantidade, userInput);
     }
 
     @ApiOperation("Faz o download do arquivo para a máquina local")
+    @NotNull
     @ApiResponses({
             @ApiResponse(code = 200, message = "Arquivo baixado com sucesso"),
             @ApiResponse(code = 401, message = "Download não autorizado"),
@@ -104,12 +104,11 @@ public class FileController {
             @ApiResponse(code = 404, message = "Página não encontrada")
     })
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(method = RequestMethod.GET, path = "/download")
-    public ResponseEntity baixarArquivo(@RequestParam String id,
+    @GetMapping("/download")
+    public void baixarArquivo(@RequestParam String id,
                                         @RequestParam String arquivo) throws IOException {
         UserInput user = userService.listarPorId(id).get();
         fileService.download(user, arquivo);
-        return new ResponseEntity(null, HttpStatus.OK);
     }
 
     @ApiOperation("Baixa um arquivo compartilhado comigo")
@@ -120,11 +119,10 @@ public class FileController {
             @ApiResponse(code = 404, message = "Página não encontrada")
     })
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(method = RequestMethod.GET, path = "compartilhadoComigo/download")
-    public ResponseEntity baixarCompartilhadoComigo(@RequestParam String id,
+    @GetMapping("compartilhadoComigo/download")
+    public void baixarCompartilhadoComigo(@RequestParam String id,
                                                     @RequestParam String arquivo) throws IOException {
         UserInput userInput = userService.listarPorId(id).get();
         fileService.downloadCompartilhadosComigo(arquivo, userInput);
-        return new ResponseEntity(null, HttpStatus.OK);
     }
 }
