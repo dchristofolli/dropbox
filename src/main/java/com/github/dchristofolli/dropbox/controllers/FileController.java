@@ -42,7 +42,7 @@ public class FileController {
     @ResponseStatus(HttpStatus.CREATED)
     public void envioArquivo(@RequestParam MultipartFile arquivo,
                                        @RequestParam String idUsuario) {
-        UserInput user = userService.listarPorId(idUsuario).get();
+        UserInput user = userService.listarPorId(idUsuario);
         fileService.enviar(arquivo, user);
     }
 
@@ -57,7 +57,7 @@ public class FileController {
     @DeleteMapping("/{idUsuario}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity excluiArquivo(@PathVariable String idUsuario, String arquivo) throws IOException {
-        UserInput user = userService.listarPorId(idUsuario).get();
+        UserInput user = userService.listarPorId(idUsuario);
         fileService.deletar(arquivo, user);
 
         return new ResponseEntity(null, HttpStatus.OK);
@@ -75,7 +75,7 @@ public class FileController {
     public Page<FileInput> listaPaginada(@RequestParam(defaultValue = "1") int pagina,
                                          @RequestParam(defaultValue = "5") int quantidade,
                                          @RequestParam(defaultValue = "5d78e7cbc7d0524eba5ad341") String usuario) {
-        UserInput userInput = userService.listarPorId(usuario).get();
+        UserInput userInput = userService.listarPorId(usuario);
         return fileService.listaPaginada(pagina, quantidade, userInput);
     }
 
@@ -91,7 +91,7 @@ public class FileController {
     public Page<FileInput> listaCompartilhadosComigo(@RequestParam(defaultValue = "1") int pagina,
                                                                      @RequestParam(defaultValue = "5") int quantidade,
                                                                      @RequestParam(defaultValue = "5d80e38e80328f4fa957feb4") String usuario) {
-        UserInput userInput = userService.listarPorId(usuario).get();
+        UserInput userInput = userService.listarPorId(usuario);
         return fileService.listaCompartilhadosComigo(pagina, quantidade, userInput);
     }
 
@@ -107,7 +107,7 @@ public class FileController {
     @GetMapping("/download")
     public void baixarArquivo(@RequestParam String id,
                                         @RequestParam String arquivo) throws IOException {
-        UserInput user = userService.listarPorId(id).get();
+        UserInput user = userService.listarPorId(id);
         fileService.download(user, arquivo);
     }
 
@@ -122,7 +122,7 @@ public class FileController {
     @GetMapping("compartilhadoComigo/download")
     public void baixarCompartilhadoComigo(@RequestParam String id,
                                                     @RequestParam String arquivo) throws IOException {
-        UserInput userInput = userService.listarPorId(id).get();
+        UserInput userInput = userService.listarPorId(id);
         fileService.downloadCompartilhadosComigo(arquivo, userInput);
     }
 }

@@ -68,12 +68,12 @@ public class FileService {
 
     public Page<FileInput> listaCompartilhadosComigo(int pagina, int quantidade, UserInput user) {
         String seguidorAux = user.getSeguidor();
-        UserInput seguidor = userService.listarPorId(seguidorAux).get();
+        UserInput seguidor = userService.listarPorId(seguidorAux);
         return listaPaginada(pagina, quantidade, seguidor);
     }
 
     public void downloadCompartilhadosComigo(String arquivo, UserInput user) throws IOException {
-        UserInput seguidor = userService.listarPorId(user.getSeguidor()).get();
+        UserInput seguidor = userService.listarPorId(user.getSeguidor());
         download(seguidor, arquivo);
     }
 }

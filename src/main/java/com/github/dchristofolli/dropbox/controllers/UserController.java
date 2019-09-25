@@ -14,13 +14,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.Optional;
 
 @AllArgsConstructor
 @RestController
 @RequestMapping(path = "/dropbox/users")
 @Api("Crud de usuários do mongodb")
-public class UserController{
+public class UserController {
 
     private UserService userService;
 
@@ -47,7 +46,7 @@ public class UserController{
             @ApiResponse(code = 404, message = "Usuário não encontrado"),
             @ApiResponse(code = 500, message = "Ocorreu um erro no servidor")})
     @GetMapping("/id")
-    public Optional<UserInput> listarPorId(@RequestParam(defaultValue = "5d80e3f880328f4fa957feb5") String id) {
+    public UserInput listarPorId(@RequestParam String id) {
         return userService.listarPorId(id);
     }
 
@@ -86,15 +85,15 @@ public class UserController{
     @NotNull
     @ApiOperation("Exclui o cadastro de um usuário")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Ok"),
+            @ApiResponse(code = 200, message = "Usuário excluído"),
             @ApiResponse(code = 204, message = "Usuário não encontrado"),
             @ApiResponse(code = 401, message = "Não autorizado"),
             @ApiResponse(code = 403, message = "Acesso negado"),
             @ApiResponse(code = 500, message = "Ocorreu um erro no servidor")})
-    @DeleteMapping(path = "/{id}")
-    public ResponseEntity<String> remover(@PathVariable String id) {
-        this.userService.remover(id);
-        return ResponseEntity.ok("Usuário removido");
+    @DeleteMapping(path = "/{user}")
+    public ResponseEntity<UserInput> remover(@PathVariable @NotNull UserInput user) {
+        this.userService.remover(user);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @ResponseStatus(HttpStatus.OK)

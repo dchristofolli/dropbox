@@ -4,10 +4,6 @@ import org.apache.commons.net.ftp.FTPFile;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class FileInput {
-    private String nomeArquivo;
-    private String tamanhoArquivo;
-    private String data;
-//    private String dono;
 
     @Autowired
     UserInput userInput;
@@ -16,38 +12,15 @@ public class FileInput {
         this.setNomeArquivo(arquivoFTP.getName());
         this.setTamanhoArquivo(arquivoFTP.getSize() + " kb");
         this.setData(arquivoFTP.getRawListing());
-//        this.setDono(userInput.getNome());
     }
 
-    public String getNomeArquivo() {
-        return nomeArquivo;
+    private void setNomeArquivo(String nomeArquivo) {
     }
 
-    public void setNomeArquivo(String nomeArquivo) {
-        this.nomeArquivo = nomeArquivo;
+    private void setTamanhoArquivo(String tamanhoArquivo) {
     }
 
-    public String getTamanhoArquivo() {
-        return tamanhoArquivo;
+    private void setData(String data) {
     }
 
-    public void setTamanhoArquivo(String tamanhoArquivo) {
-        this.tamanhoArquivo = tamanhoArquivo;
-    }
-
-    public String getData() {
-        return data;
-    }
-
-    public void setData(String data) {
-        this.data = data;
-    }
-
-//    public String getDono() {
-//        return dono;
-//    }
-//
-//    public void setDono(String dono) {
-//        this.dono = dono;
-//    }
 }

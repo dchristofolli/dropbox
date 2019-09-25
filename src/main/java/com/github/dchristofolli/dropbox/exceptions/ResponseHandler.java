@@ -13,8 +13,8 @@ import java.util.Map;
 @ControllerAdvice
 public class ResponseHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
+    @ExceptionHandler(ApiException.class)
+    public Map<String, String> UserNotFound(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach(error -> {
             String fieldName = ((FieldError) error).getField();
