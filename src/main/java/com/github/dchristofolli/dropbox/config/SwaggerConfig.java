@@ -1,4 +1,4 @@
-package com.github.dchristofolli.dropbox.swagger;
+package com.github.dchristofolli.dropbox.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

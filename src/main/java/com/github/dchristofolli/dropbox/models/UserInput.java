@@ -22,15 +22,14 @@ public class UserInput {
 
     @Id
     private String id;
-    @NotNull(message = "O nome deve ser preenchido")
+    @NotNull(message = "{nameNotNull}")
     private String nome;
-    @CPF(message = "CPF inválido")
+    @CPF(message = "{invalidCpf}")
     private String cpf;
-    @Email(message = "E-mail inválido")
+    @Email(message = "{invalidEmail}")
     private String email;
     private String seguidor;
-    @NotBlank(message = "A senha deve ser preenchida")
-    @Size(min = 4, message = "A senha deve ter pelo menos 4 caracteres")
+    @Size(min = 4, message = "{invalidPass}")
     private String senha;
 
 }
