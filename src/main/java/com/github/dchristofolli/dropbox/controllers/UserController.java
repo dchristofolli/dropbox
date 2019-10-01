@@ -1,5 +1,6 @@
 package com.github.dchristofolli.dropbox.controllers;
 
+import com.github.dchristofolli.dropbox.exceptions.ApiException;
 import com.github.dchristofolli.dropbox.models.UserInput;
 import com.github.dchristofolli.dropbox.services.UserService;
 import io.swagger.annotations.Api;
@@ -17,7 +18,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping(path = "/dropbox/users")
+@RequestMapping(path = "/dropbox/v1/users")
 @Api("Crud de usuários do mongodb")
 public class UserController {
 
@@ -26,15 +27,15 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation("Lista todos os usuários")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Usuários encontrados"),
+            @ApiResponse(code = 200, message = "Usuários encontrados", response = UserInput.class, responseContainer = "List"),
             @ApiResponse(code = 401, message = "Acesso não autorizado"),
             @ApiResponse(code = 403, message = "Acesso negado"),
-            @ApiResponse(code = 404, message = "Nenhum usuário encontrado"),
+            @ApiResponse(code = 404, message = "Nenhum usuário encontrado", response = ApiException.class),
             @ApiResponse(code = 500, message = "Ocorreu um erro no servidor")})
     @GetMapping
     public List<UserInput> listarTodos() {
         return this.userService.listarUsers();
-    }
+    }//TODO criar models de response request
 
     @ResponseStatus(HttpStatus.OK)
     @NotNull
@@ -43,7 +44,7 @@ public class UserController {
             @ApiResponse(code = 200, message = "Usuário encontrado"),
             @ApiResponse(code = 401, message = "Usuário inválido"),
             @ApiResponse(code = 403, message = "Acesso negado"),
-            @ApiResponse(code = 404, message = "Usuário não encontrado"),
+            @ApiResponse(code = 404, message = "Usuário não encontrado", response = ApiException.class),
             @ApiResponse(code = 500, message = "Ocorreu um erro no servidor")})
     @GetMapping("/id")
     public UserInput listarPorId(@RequestParam String id) {

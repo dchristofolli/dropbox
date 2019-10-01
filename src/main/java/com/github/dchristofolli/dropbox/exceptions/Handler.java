@@ -1,6 +1,7 @@
 package com.github.dchristofolli.dropbox.exceptions;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -22,5 +23,10 @@ public class Handler {
             errors.put(fieldName, errorMessage);
         });
         return errors;
+    }
+
+    @ExceptionHandler(ApiException.class)
+    public ResponseEntity handleApiException(ApiException apiException) {
+        return new ResponseEntity(apiException.getMessage(), apiException.getStatus());
     }
 }

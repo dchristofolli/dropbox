@@ -4,6 +4,7 @@ import com.github.dchristofolli.dropbox.exceptions.ApiException;
 import com.github.dchristofolli.dropbox.ftp.FtpUser;
 import com.github.dchristofolli.dropbox.models.UserInput;
 import com.github.dchristofolli.dropbox.repositories.UserRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,13 +22,13 @@ public class UserService {
     public List<UserInput> listarUsers() {
         List<UserInput> userInputsList = userRepository.findAll();
         if (userInputsList.isEmpty()) {
-            throw new ApiException("Nenhum usuário encontrado");
+            throw new ApiException("Nenhum usuário encontrado", HttpStatus.NOT_FOUND);
         }
         return userInputsList;
     }
 
     public UserInput listarPorId(String id) {
-        return userRepository.findById(id).orElseThrow(() -> new ApiException("Usuário não encontrado"));
+        return userRepository.findById(id).orElseThrow(() -> new ApiException("Usuário não encontrado", HttpStatus.NOT_FOUND));
     }
 
     public UserInput cadastrar(UserInput userInput) {
@@ -50,6 +51,6 @@ public class UserService {
                 .map(userInput -> {
                     userInput.setSeguidor(idVisitante);
                     return atualizar(userInput);
-                }).orElse(null);
+                }).orElseThrow(() -> new ApiException("Não encontrado", HttpStatus.NOT_FOUND));
     }
 }
