@@ -1,7 +1,7 @@
 package com.github.dchristofolli.dropbox.services;
 
-import com.github.dchristofolli.dropbox.ftp.FtpUser;
 import com.github.dchristofolli.dropbox.ftp.FtpLogin;
+import com.github.dchristofolli.dropbox.ftp.FtpUser;
 import org.apache.ftpserver.ConnectionConfigFactory;
 import org.apache.ftpserver.FtpServer;
 import org.apache.ftpserver.FtpServerFactory;
@@ -19,7 +19,7 @@ public class FtpService {
 
     private FtpServer server;
 
-    public void start(){
+    public void start(){ //TODO modularizar a classe
         FtpServerFactory serverFactory = new FtpServerFactory();
 
         ListenerFactory listenerFactory = new ListenerFactory();

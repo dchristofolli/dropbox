@@ -36,7 +36,7 @@ class UserControllerTest {
     @Test
     void listarTodos() {
         UserInput user = new UserInput();
-        when(userService.listarUsers()).
+        when(userService.showAllUsers()).
                 thenReturn(createUsers.criaListaDeUsuarios());
     }
 
@@ -57,7 +57,7 @@ class UserControllerTest {
     @Test
     void atualizar() {
         UserInput userInput = createUsers.criaUsuario();
-        userInput.setNome("Teste2");
+        userInput.setName("Teste2");
         when(userRepository.save(userInput)).thenReturn(userInput);
     }
 
@@ -65,7 +65,7 @@ class UserControllerTest {
     void remover() {
         UserInput userInput = createUsers.criaUsuario();
         when(userRepository.findById(userInput.getId())).thenReturn(Optional.of(userInput));
-        userService.remover(userInput.getId());
+        userService.deleteUser(userInput.getId());
         verify(userRepository, times(1)).deleteById(userInput.getId());
     }
 

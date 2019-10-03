@@ -3,6 +3,8 @@ package com.github.dchristofolli.dropbox.services;
 import com.github.dchristofolli.dropbox.ftp.StartServer;
 import com.github.dchristofolli.dropbox.models.FileInput;
 import com.github.dchristofolli.dropbox.models.UserInput;
+import com.github.dchristofolli.dropbox.models.UserMapper;
+import com.github.dchristofolli.dropbox.models.UserResponse;
 import lombok.AllArgsConstructor;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
@@ -18,11 +20,12 @@ import java.util.List;
 @AllArgsConstructor
 @Service
 public class FileService {
-    UserService userService;
+    private UserService userService;
+    private UserMapper userMapper;
 
     public void enviar(MultipartFile arquivo, UserInput userInput) {
 
-        FTPClient conexao = FtpConnect.conexao(userInput.getNome(), userInput.getSenha());
+        FTPClient conexao = FtpConnect.conexao(userInput.getName(), userInput.getPassword());
         try {
             conexao.storeFile(arquivo.getOriginalFilename(), arquivo.getInputStream());
         } catch (IOException e) {
@@ -32,14 +35,15 @@ public class FileService {
     }
 
     public Boolean deletar(String arquivo, UserInput user) throws IOException {
-        FTPClient conexao = FtpConnect.conexao(user.getNome(), user.getSenha());
+        FTPClient conexao = FtpConnect.conexao(user.getName(), user.getPassword());
         return conexao.deleteFile(arquivo);
     }
 
-    public void download(UserInput usuario, String arquivo) throws IOException {
-        List<UserInput> users = userService.listarUsers();
-        if (users.contains(usuario)) {
-            FTPClient ftpClient = FtpConnect.conexao(usuario.getNome(), usuario.getSenha());
+    public void download(UserInput user, String arquivo) throws IOException {
+        List<UserResponse> users = userService.showAllUsers();
+        UserResponse userResponse = userMapper.userResponseMapper(user);
+        if (users.contains(userResponse)) {
+            FTPClient ftpClient = FtpConnect.conexao(user.getName(), user.getPassword());
             FileOutputStream fileOutputStream;
             fileOutputStream = new FileOutputStream("/home/dchristofolli/DownloadsFTP/" + arquivo);
             ftpClient.retrieveFile(arquivo, fileOutputStream);
@@ -47,7 +51,7 @@ public class FileService {
     }
 
     public ArrayList<FileInput> listarArquivosDoUsuario(UserInput user) {
-        FTPClient conexao = FtpConnect.conexao(user.getNome(), user.getSenha());
+        FTPClient conexao = FtpConnect.conexao(user.getName(), user.getPassword());
         try {
             FTPFile[] files = conexao.listFiles();
             ArrayList<FileInput> fileInputs = new ArrayList<>();
@@ -66,14 +70,14 @@ public class FileService {
         return FtpConnect.paginacao(listarArquivosDoUsuario(user), pagina, quantidade);
     }
 
-    public Page<FileInput> listaCompartilhadosComigo(int pagina, int quantidade, UserInput user) {
-        String seguidorAux = user.getSeguidor();
-        UserInput seguidor = userService.listarPorId(seguidorAux);
-        return listaPaginada(pagina, quantidade, seguidor);
-    }
-
-    public void downloadCompartilhadosComigo(String arquivo, UserInput user) throws IOException {
-        UserInput seguidor = userService.listarPorId(user.getSeguidor());
-        download(seguidor, arquivo);
-    }
+//    public Page<FileInput> listaCompartilhadosComigo(int pagina, int quantidade, UserInput user) {
+//        String seguidorAux = user.getFollower();
+//        UserInput seguidor = userMapper.userInputMapper(userService.showUserById(user));
+//        return listaPaginada(pagina, quantidade, seguidor);
+//    }
+//
+//    public void downloadCompartilhadosComigo(String arquivo, UserInput user) throws IOException {
+//        UserInput seguidor = userService.listarPorId(user.getSeguidor());
+//        download(seguidor, arquivo);
+//    }
 }

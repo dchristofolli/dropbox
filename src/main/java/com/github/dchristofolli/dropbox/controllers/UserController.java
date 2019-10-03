@@ -2,6 +2,9 @@ package com.github.dchristofolli.dropbox.controllers;
 
 import com.github.dchristofolli.dropbox.exceptions.ApiException;
 import com.github.dchristofolli.dropbox.models.UserInput;
+import com.github.dchristofolli.dropbox.models.UserMapper;
+import com.github.dchristofolli.dropbox.models.UserResponse;
+import com.github.dchristofolli.dropbox.models.UserRequest;
 import com.github.dchristofolli.dropbox.services.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,49 +24,48 @@ import java.util.List;
 @RequestMapping(path = "/dropbox/v1/users")
 @Api("Crud de usuários do mongodb")
 public class UserController {
+    // TODO implementar facade
+    //TODO separar o projeto em módulos
 
     private UserService userService;
+    private UserMapper userMapper;
 
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation("Lista todos os usuários")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Usuários encontrados", response = UserInput.class, responseContainer = "List"),
+            @ApiResponse(code = 200, message = "Usuários encontrados", response = UserInput
+                    .class, responseContainer = "List"),
             @ApiResponse(code = 401, message = "Acesso não autorizado"),
             @ApiResponse(code = 403, message = "Acesso negado"),
             @ApiResponse(code = 404, message = "Nenhum usuário encontrado", response = ApiException.class),
             @ApiResponse(code = 500, message = "Ocorreu um erro no servidor")})
     @GetMapping
-    public List<UserInput> listarTodos() {
-        return this.userService.listarUsers();
-    }//TODO criar models de response request
+    public List<UserResponse> listarTodos() {
+        return this.userService.showAllUsers();
+    }
 
     @ResponseStatus(HttpStatus.OK)
-    @NotNull
-    @ApiOperation("Busca o usuário através do ID")
+    @ApiOperation("Exibe os dados de um usuário recebendo o ID")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Usuário encontrado"),
             @ApiResponse(code = 401, message = "Usuário inválido"),
-            @ApiResponse(code = 403, message = "Acesso negado"),
             @ApiResponse(code = 404, message = "Usuário não encontrado", response = ApiException.class),
             @ApiResponse(code = 500, message = "Ocorreu um erro no servidor")})
     @GetMapping("/id")
-    public UserInput listarPorId(@RequestParam String id) {
-        return userService.listarPorId(id);
+    public UserResponse listarPorId(@RequestParam String id) {
+        return userService.showUserById(id);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @NotNull
     @ApiOperation("Cadastra um novo usuário")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Ok"),
             @ApiResponse(code = 201, message = "Usuário cadastrado com sucesso"),
-            @ApiResponse(code = 401, message = "Não autorizado"),
-            @ApiResponse(code = 403, message = "Acesso negado"),
             @ApiResponse(code = 404, message = "Dados inválidos"),
             @ApiResponse(code = 500, message = "Ocorreu um erro no servidor")})
     @PostMapping
-    public UserInput cadastrar(@Valid @RequestBody UserInput userInput) {
-        return this.userService.cadastrar(userInput);
+    public UserResponse cadastrar(@Valid @RequestBody UserRequest user) {
+        return this.userService.saveUser(userMapper.userInputMapper(user));
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -73,13 +75,12 @@ public class UserController {
             @ApiResponse(code = 200, message = "Ok"),
             @ApiResponse(code = 201, message = "Usuário atualizado com sucesso"),
             @ApiResponse(code = 401, message = "Não autorizado"),
-            @ApiResponse(code = 403, message = "Acesso negado"),
             @ApiResponse(code = 404, message = "Dados inválidos"),
             @ApiResponse(code = 500, message = "Ocorreu um erro no servidor")})
     @PutMapping(path = "/{id}")
     public UserInput atualizar(@Valid @PathVariable(name = "id") String id,
                                @RequestBody UserInput userInput) {
-        return this.userService.atualizar(userInput);
+        return this.userService.updateUser(userInput);
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -93,7 +94,7 @@ public class UserController {
             @ApiResponse(code = 500, message = "Ocorreu um erro no servidor")})
     @DeleteMapping(path = "/{user}")
     public ResponseEntity<UserInput> remover(@PathVariable @NotNull UserInput user) {
-        this.userService.remover(user);
+        this.userService.deleteUser(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -104,7 +105,7 @@ public class UserController {
     })
     @PutMapping
     public UserInput adicionaVisitante(@RequestParam String idUsuario,
-                                       @RequestParam String idVisitante) {
-        return userService.permiteVisitante(idUsuario, idVisitante);
+                                       @RequestParam String idVisitante) { // TODO terminar de remover the Joel Santana
+        return userService.allowFollower(idUsuario, idVisitante);
     }
 }
