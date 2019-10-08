@@ -1,4 +1,4 @@
-package com.github.dchristofolli.dropbox.controllers;
+package com.github.dchristofolli.impl.dropbox.controllers;
 
 
 import com.github.dchristofolli.dropbox.models.UserInput;

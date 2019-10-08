@@ -1,8 +1,7 @@
-package com.github.dchristofolli.dropbox.controllers;
+package com.github.dchristofolli.impl.dropbox.controllers;
 
 import com.github.dchristofolli.dropbox.models.UserInput;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

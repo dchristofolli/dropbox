@@ -1,4 +1,4 @@
-package com.github.dchristofolli.dropbox.stub;
+package com.github.dchristofolli.impl.dropbox.stub;
 
 import com.github.dchristofolli.dropbox.models.UserInput;
 
