@@ -1,4 +1,4 @@
-package com.github.dchristofolli.impl.dropbox;
+package com.github.dchristofolli.dropbox;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,4 +1,4 @@
-package com.github.dchristofolli.impl.dropbox.controllers;
+package com.github.dchristofolli.dropbox.controllers;
 
 import org.junit.Rule;
 import org.junit.jupiter.api.BeforeEach;
