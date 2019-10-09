@@ -2,6 +2,7 @@ package com.github.dchristofolli.dropbox.controllers;
 
 
 import com.github.dchristofolli.dropbox.models.UserInput;
+import com.github.dchristofolli.dropbox.models.UserMapper;
 import com.github.dchristofolli.dropbox.repositories.UserRepository;
 import com.github.dchristofolli.dropbox.services.UserService;
 import org.junit.Rule;
@@ -19,57 +20,57 @@ import static org.mockito.Mockito.*;
 class UserControllerTest {
     @Rule
     ExpectedException exception = ExpectedException.none();
-    private MessageSource messageSource;
     private UserRepository userRepository;
     private UserService userService;
     private CreateUsers createUsers;
+    private UserMapper userMapper;
 
     @BeforeEach
     void setUp() {
-        messageSource = mock(MessageSource.class);
+        MessageSource messageSource = mock(MessageSource.class);
         userRepository = mock(UserRepository.class);
-        userService = new UserService(userRepository);
+        userService = new UserService(userRepository, userMapper);
         createUsers = new CreateUsers();
 
     }
 
     @Test
-    void listarTodos() {
+    void showAllUsers() {
         UserInput user = new UserInput();
         when(userService.showAllUsers()).
-                thenReturn(createUsers.criaListaDeUsuarios());
+                thenReturn(createUsers.createUsersList());
     }
 
     @Test
-    void listarPorId() {
+    void findById() {
         when(userRepository.findById(any())).
-                thenReturn(Optional.of(createUsers.criaUsuario()));
+                thenReturn(Optional.of(createUsers.createUser()));
     }
 
     @Test
-    void cadastrar() {
-        UserInput user = createUsers.criaUsuario();
+    void setCreateUsers() {
+        UserInput user = createUsers.createUser();
         when(userRepository.save(user)).thenReturn(user);
-        UserInput criaUsuario = userRepository.save(user);
-        assertEquals(user.getId(), criaUsuario.getId());
+        UserInput createUser = userRepository.save(user);
+        assertEquals(user.getId(), createUser.getId());
     }
 
     @Test
-    void atualizar() {
-        UserInput userInput = createUsers.criaUsuario();
-        userInput.setName("Teste2");
+    void updateUser() {
+        UserInput userInput = createUsers.createUser();
+        userInput.setName("Test2");
         when(userRepository.save(userInput)).thenReturn(userInput);
     }
 
     @Test
-    void remover() {
-        UserInput userInput = createUsers.criaUsuario();
+    void deleteById() {
+        UserInput userInput = createUsers.createUser();
         when(userRepository.findById(userInput.getId())).thenReturn(Optional.of(userInput));
-        userService.deleteUser(userInput.getId());
+        userService.deleteUser(userInput);
         verify(userRepository, times(1)).deleteById(userInput.getId());
     }
 
     @Test
-    void adicionaVisitante() {
+    void addFollower() {
     }
 }

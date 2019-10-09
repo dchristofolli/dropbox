@@ -29,4 +29,14 @@ public class Handler {
     public ResponseEntity handleApiException(ApiException apiException) {
         return new ResponseEntity(apiException.getMessage(), apiException.getStatus());
     }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorModel> handleException(Exception e) {
+        return new ResponseEntity(ErrorModel.builder()
+                .message("Unexpected Error")
+                .error(e.getClass().getName())
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .build(),
+                HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }
