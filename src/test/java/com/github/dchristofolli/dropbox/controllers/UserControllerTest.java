@@ -1,9 +1,5 @@
 package com.github.dchristofolli.impl.dropbox.controllers;
 
-
-import com.github.dchristofolli.dropbox.models.UserInput;
-import com.github.dchristofolli.dropbox.repositories.UserRepository;
-import com.github.dchristofolli.dropbox.services.UserService;
 import org.junit.Rule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,14 +18,14 @@ class UserControllerTest {
     private MessageSource messageSource;
     private UserRepository userRepository;
     private UserService userService;
-    private CreateUsers createUsers;
+    private com.github.dchristofolli.impl.dropbox.controllers.CreateUsers createUsers;
 
     @BeforeEach
     void setUp() {
         messageSource = mock(MessageSource.class);
         userRepository = mock(UserRepository.class);
         userService = new UserService(userRepository);
-        createUsers = new CreateUsers();
+        createUsers = new com.github.dchristofolli.impl.dropbox.controllers.CreateUsers();
 
     }
 

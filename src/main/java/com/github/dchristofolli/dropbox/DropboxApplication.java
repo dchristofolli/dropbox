@@ -1,7 +1,6 @@
-package com.github.dchristofolli;
+package com.github.dchristofolli.dropbox;
 
 
-import com.github.dchristofolli.impl.ftp.FtpStart;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -10,7 +9,6 @@ public class DropboxApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(DropboxApplication.class, args);
-        FtpStart.run();
+//        FtpStart.run();
     }
-
 }
