@@ -1,7 +1,7 @@
 package com.github.dchristofolli.dropbox.ftp;
 
 
-import com.github.dchristofolli.dropbox.file.model.FileModel;
+import com.github.dchristofolli.dropbox.v1.file.model.FileModel;
 import org.apache.commons.net.ftp.FTPClient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
