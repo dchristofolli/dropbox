@@ -1,8 +1,8 @@
 package com.github.dchristofolli.dropbox.controllers;
 
 
-import com.github.dchristofolli.dropbox.models.UserInput;
-import com.github.dchristofolli.dropbox.models.UserMapper;
+import com.github.dchristofolli.dropbox.model.UserInput;
+import com.github.dchristofolli.dropbox.model.UserMapper;
 import com.github.dchristofolli.dropbox.repositories.UserRepository;
 import com.github.dchristofolli.dropbox.services.UserService;
 import org.junit.Rule;

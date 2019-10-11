@@ -1,7 +1,7 @@
 package com.github.dchristofolli.dropbox.controllers;
 
-import com.github.dchristofolli.dropbox.models.UserInput;
-import com.github.dchristofolli.dropbox.models.UserResponse;
+import com.github.dchristofolli.dropbox.model.UserInput;
+import com.github.dchristofolli.dropbox.model.response.UserResponse;
 
 import java.util.Arrays;
 import java.util.List;

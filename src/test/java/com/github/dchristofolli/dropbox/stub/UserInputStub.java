@@ -1,6 +1,6 @@
 package com.github.dchristofolli.dropbox.stub;
 
-import com.github.dchristofolli.dropbox.models.UserInput;
+import com.github.dchristofolli.dropbox.model.UserInput;
 
 import java.util.Collections;
 import java.util.List;
