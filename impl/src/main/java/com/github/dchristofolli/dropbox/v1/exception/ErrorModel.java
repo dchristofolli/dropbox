@@ -1,4 +1,4 @@
-package com.github.dchristofolli.dropbox.exception;
+package com.github.dchristofolli.dropbox.v1.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 @Builder
 @AllArgsConstructor
 @Data
-public class ErrorModel {
+class ErrorModel {
     String message;
     String error;
     HttpStatus status;

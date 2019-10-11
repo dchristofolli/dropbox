@@ -1,7 +1,7 @@
 package com.github.dchristofolli.dropbox.v1.user.service;
 
-import com.github.dchristofolli.dropbox.exception.ApiException;
-import com.github.dchristofolli.dropbox.ftp.FtpUser;
+import com.github.dchristofolli.dropbox.v1.exception.ApiException;
+import com.github.dchristofolli.dropbox.v1.ftp.FtpUser;
 import com.github.dchristofolli.dropbox.v1.user.model.UserModel;
 import com.github.dchristofolli.dropbox.v1.user.repository.UserEntity;
 import com.github.dchristofolli.dropbox.v1.user.repository.UserRepository;

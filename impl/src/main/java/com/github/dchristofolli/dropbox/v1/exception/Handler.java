@@ -1,4 +1,4 @@
-package com.github.dchristofolli.dropbox.exception;
+package com.github.dchristofolli.dropbox.v1.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.github.dchristofolli.dropbox.ftp;
+package com.github.dchristofolli.dropbox.v1.ftp;
 
 import org.apache.ftpserver.ConnectionConfigFactory;
 import org.apache.ftpserver.FtpServer;

@@ -1,6 +1,6 @@
 package com.github.dchristofolli.dropbox.v1.user;
 
-import com.github.dchristofolli.dropbox.exception.ApiException;
+import com.github.dchristofolli.dropbox.v1.exception.ApiException;
 import com.github.dchristofolli.dropbox.v1.user.model.UserModel;
 import com.github.dchristofolli.dropbox.v1.user.model.UserModelList;
 import com.github.dchristofolli.dropbox.v1.user.model.request.UserRequest;

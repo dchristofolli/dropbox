@@ -1,9 +1,9 @@
 package com.github.dchristofolli.dropbox.v1.file.service;
 
-import com.github.dchristofolli.dropbox.ftp.FtpConnect;
-import com.github.dchristofolli.dropbox.ftp.StartServer;
 import com.github.dchristofolli.dropbox.v1.file.model.FileModel;
 import com.github.dchristofolli.dropbox.v1.file.model.FileModelList;
+import com.github.dchristofolli.dropbox.v1.ftp.FtpConnect;
+import com.github.dchristofolli.dropbox.v1.ftp.StartServer;
 import com.github.dchristofolli.dropbox.v1.user.model.UserModel;
 import com.github.dchristofolli.dropbox.v1.user.model.UserModelList;
 import com.github.dchristofolli.dropbox.v1.user.service.UserService;

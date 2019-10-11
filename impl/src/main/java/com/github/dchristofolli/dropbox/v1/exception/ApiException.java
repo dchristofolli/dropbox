@@ -1,4 +1,4 @@
-package com.github.dchristofolli.dropbox.exception;
+package com.github.dchristofolli.dropbox.v1.exception;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
