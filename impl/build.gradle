@@ -1,16 +1,3 @@
-plugins {
-    id 'java'
-}
-
-group 'com.github.dchristofolli'
-version '1'
-
-sourceCompatibility = 1.8
-
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     implementation 'org.mongodb:mongodb-driver-sync:3.10.2'
