@@ -5,7 +5,6 @@ import com.github.dchristofolli.dropbox.v1.file.model.FileModelList;
 import com.github.dchristofolli.dropbox.v1.ftp.FtpConnect;
 import com.github.dchristofolli.dropbox.v1.ftp.StartServer;
 import com.github.dchristofolli.dropbox.v1.user.model.UserModel;
-import com.github.dchristofolli.dropbox.v1.user.model.UserModelList;
 import com.github.dchristofolli.dropbox.v1.user.service.UserService;
 import lombok.AllArgsConstructor;
 import org.apache.commons.net.ftp.FTPClient;

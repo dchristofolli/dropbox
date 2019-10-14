@@ -4,6 +4,7 @@ import com.github.dchristofolli.dropbox.v1.exception.ApiException;
 import com.github.dchristofolli.dropbox.v1.ftp.FtpUser;
 import com.github.dchristofolli.dropbox.v1.user.mapper.UserMapperImpl;
 import com.github.dchristofolli.dropbox.v1.user.model.UserModel;
+import com.github.dchristofolli.dropbox.v1.user.model.UserModelList;
 import com.github.dchristofolli.dropbox.v1.user.repository.UserEntity;
 import com.github.dchristofolli.dropbox.v1.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -32,6 +33,18 @@ public class UserService {
     public UserModel findById(String id) {
         return mapToModel(userRepository.findById(id)
                 .orElseThrow(() -> new ApiException("Usuário não encontrado", HttpStatus.NOT_FOUND)));
+    }
+
+    public UserModel findByCpf(String cpf){
+        UserModel user = null;
+        List<UserModel> list = findAll();
+        for (UserModel u: list) {
+            if (!u.getCpf().equals(cpf)){
+                throw new ApiException("Usuário não encontrado", HttpStatus.NOT_FOUND);
+            }
+            user = findById(u.getId());
+        }
+        return user;
     }
 
     public UserModel createUser(UserModel user) {

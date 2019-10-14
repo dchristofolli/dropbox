@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
+import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,20 +24,6 @@ import javax.validation.constraints.NotNull;
 public class UserController {
     UserContractFacade facade;
 
-//    @ResponseStatus(HttpStatus.OK)
-//    @ApiOperation("Lista todos os usuários")
-//    @ApiResponses({
-//            @ApiResponse(code = 200, message = "Usuários encontrados", response = UserModel
-//                    .class, responseContainer = "List"),
-//            @ApiResponse(code = 401, message = "Acesso não autorizado"),
-//            @ApiResponse(code = 403, message = "Acesso negado"),
-//            @ApiResponse(code = 404, message = "Nenhum usuário encontrado", response = ApiException.class),
-//            @ApiResponse(code = 500, message = "Ocorreu um erro no servidor")})
-//    @GetMapping
-//    public UserModelList findAllUsers() {
-//        return this.facade.findAllUsers();
-//    }
-
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation("Exibe os dados de um usuário recebendo o ID")
     @ApiResponses({
@@ -47,6 +34,18 @@ public class UserController {
     @GetMapping("/id")
     public UserResponse findById(@RequestParam String id) {
         return facade.findById(id);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation("Exibe os dados de um usuário recebendo o CPF")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Usuário encontrado"),
+            @ApiResponse(code = 401, message = "Usuário inválido"),
+            @ApiResponse(code = 404, message = "Usuário não encontrado", response = ApiException.class),
+            @ApiResponse(code = 500, message = "Ocorreu um erro no servidor")})
+    @GetMapping("/cpf")
+    public UserResponse findByCpf(@RequestParam String cpf){
+        return facade.findByCpf(cpf);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
