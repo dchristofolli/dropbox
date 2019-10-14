@@ -2,7 +2,6 @@ package com.github.dchristofolli.dropbox.v1.user;
 
 import com.github.dchristofolli.dropbox.v1.user.mapper.UserMapperContract;
 import com.github.dchristofolli.dropbox.v1.user.model.UserModel;
-import com.github.dchristofolli.dropbox.v1.user.model.UserModelList;
 import com.github.dchristofolli.dropbox.v1.user.model.request.UserRequest;
 import com.github.dchristofolli.dropbox.v1.user.model.response.UserResponse;
 import lombok.AllArgsConstructor;
@@ -15,10 +14,6 @@ class UserContractFacade {
 
     UserResponse findById(String id) {
         return UserMapperContract.mapToContract(facade.findById(id));
-    }
-
-    UserModelList findAllUsers() {
-        return facade.findAll();
     }
 
     UserResponse createUser(UserRequest user) {

@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @AllArgsConstructor
 @Service
@@ -40,7 +41,7 @@ public class FileService {
     }
 
     public void download(String user, String fileName) throws IOException {
-        UserModelList users = userService.findAll();
+        List<UserModel> users = userService.findAll();
         if (users.contains(user)) {
             FTPClient ftpClient = FtpConnect.connect(userService
                     .findById(user)
@@ -69,7 +70,7 @@ public class FileService {
     }
 
     public Page<FileModel> pagedList(int page, int quantity, UserModel user) {
-        return FtpConnect.pagedList((List<FileModel>) showUserFiles(user), page, quantity);
+        return FtpConnect.pagedList((List<FileModel>) Objects.requireNonNull(showUserFiles(user)), page, quantity);
     }
 
     public Page<FileModel> listsSharedWithMe(int page, int quantity, String user) {

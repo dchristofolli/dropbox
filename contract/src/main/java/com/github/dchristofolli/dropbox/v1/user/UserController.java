@@ -2,7 +2,6 @@ package com.github.dchristofolli.dropbox.v1.user;
 
 import com.github.dchristofolli.dropbox.v1.exception.ApiException;
 import com.github.dchristofolli.dropbox.v1.user.model.UserModel;
-import com.github.dchristofolli.dropbox.v1.user.model.UserModelList;
 import com.github.dchristofolli.dropbox.v1.user.model.request.UserRequest;
 import com.github.dchristofolli.dropbox.v1.user.model.response.UserResponse;
 import io.swagger.annotations.Api;
@@ -24,19 +23,19 @@ import javax.validation.constraints.NotNull;
 public class UserController {
     UserContractFacade facade;
 
-    @ResponseStatus(HttpStatus.OK)
-    @ApiOperation("Lista todos os usuários")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "Usuários encontrados", response = UserModel
-                    .class, responseContainer = "List"),
-            @ApiResponse(code = 401, message = "Acesso não autorizado"),
-            @ApiResponse(code = 403, message = "Acesso negado"),
-            @ApiResponse(code = 404, message = "Nenhum usuário encontrado", response = ApiException.class),
-            @ApiResponse(code = 500, message = "Ocorreu um erro no servidor")})
-    @GetMapping
-    public UserModelList findAllUsers() {
-        return this.facade.findAllUsers();
-    }
+//    @ResponseStatus(HttpStatus.OK)
+//    @ApiOperation("Lista todos os usuários")
+//    @ApiResponses({
+//            @ApiResponse(code = 200, message = "Usuários encontrados", response = UserModel
+//                    .class, responseContainer = "List"),
+//            @ApiResponse(code = 401, message = "Acesso não autorizado"),
+//            @ApiResponse(code = 403, message = "Acesso negado"),
+//            @ApiResponse(code = 404, message = "Nenhum usuário encontrado", response = ApiException.class),
+//            @ApiResponse(code = 500, message = "Ocorreu um erro no servidor")})
+//    @GetMapping
+//    public UserModelList findAllUsers() {
+//        return this.facade.findAllUsers();
+//    }
 
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation("Exibe os dados de um usuário recebendo o ID")

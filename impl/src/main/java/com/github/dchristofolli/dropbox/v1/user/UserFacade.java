@@ -1,7 +1,6 @@
 package com.github.dchristofolli.dropbox.v1.user;
 
 import com.github.dchristofolli.dropbox.v1.user.model.UserModel;
-import com.github.dchristofolli.dropbox.v1.user.model.UserModelList;
 import com.github.dchristofolli.dropbox.v1.user.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -13,10 +12,6 @@ public class UserFacade {
 
     public UserModel findById(String id) {
         return service.findById(id);
-    }
-
-    public UserModelList findAll() {
-        return service.findAll();
     }
 
     public UserModel createUser(UserModel user) {

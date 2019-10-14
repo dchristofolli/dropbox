@@ -11,12 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FtpUser {
-    private static String nomeUsuario;
-    private static boolean novoUsuario;
-    private static String senhaUsuario;
+    private static String userName;
+    private static boolean isNewUser;
 
 
-    public static UserManager mantemProperties() {
+    static UserManager propertiesManager() {
         PropertiesUserManagerFactory umf = new PropertiesUserManagerFactory();
         try {
             new File("users.properties").createNewFile();
@@ -28,17 +27,17 @@ public class FtpUser {
     }
 
 
-    public static void salvaUsuario(String nome, String senha) {
-        UserManager userManager = mantemProperties();
+    public static void saveUser(String userName, String pass) {
+        UserManager userManager = propertiesManager();
 
         List<Authority> authorities = new ArrayList<>();
         authorities.add(new WritePermission());
 
         BaseUser user = new BaseUser();
         user.setAuthorities(authorities);
-        user.setName(nome);
-        user.setPassword(senha);
-        user.setHomeDirectory(getPathUsuario(nome));
+        user.setName(userName);
+        user.setPassword(pass);
+        user.setHomeDirectory(getUserPath(userName));
 
         try {
             Runtime.getRuntime().exec("mkdir " + user.getHomeDirectory());
@@ -48,30 +47,30 @@ public class FtpUser {
         }
     }
 
-    private static String getPathUsuario(String nome) {
-        return System.getProperty("user.dir") + "/servidorFTP/" + nome;
+    private static String getUserPath(String userName) {
+        return System.getProperty("user.dir") + "/ftpFiles/" + userName;
     }
 
-    public static void criarNovoUsuario(FtpRequest request, String command) {
+    static void saveUser(FtpRequest request, String command) {
         if (command.contains("USER")) {
-            nomeUsuario = request.getArgument();
-            novoUsuario = FtpUser.verificaUsuario(nomeUsuario);
+            userName = request.getArgument();
+            isNewUser = FtpUser.checkUser(userName);
         }
-        if (command.contains("PASS") && novoUsuario) {
-            senhaUsuario = request.getArgument();
-            salvaUsuario(nomeUsuario, senhaUsuario);
-            novoUsuario = false;
+        if (command.contains("PASS") && isNewUser) {
+            String userPassword = request.getArgument();
+            saveUser(userName, userPassword);
+            isNewUser = false;
         }
     }
 
-    public static boolean verificaUsuario(String nome) {
-        User usuario = null;
+    private static boolean checkUser(String nome) {
+        User user = null;
         try {
-            usuario = mantemProperties().getUserByName(nome);
+            user = propertiesManager().getUserByName(nome);
         } catch (FtpException e) {
             e.getMessage();
         }
-        return usuario == null;
+        return user == null;
     }
 
 }

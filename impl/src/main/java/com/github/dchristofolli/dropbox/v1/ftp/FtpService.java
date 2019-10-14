@@ -17,24 +17,11 @@ public class FtpService {
 
     private FtpServer server;
 
-    public void start(){ //TODO modularizar a classe
+    void start() {
         FtpServerFactory serverFactory = new FtpServerFactory();
-
-        ListenerFactory listenerFactory = new ListenerFactory();
-        listenerFactory.setPort(2021);
-        listenerFactory.setIdleTimeout(120000000);
-
-        ConnectionConfigFactory connectionConfigFactory = new ConnectionConfigFactory();
-        connectionConfigFactory.setAnonymousLoginEnabled(false);
-
-        Map<String, Ftplet> map = new HashMap<>();
-        map.put("FtpletListeners", new FtpLogin());
-
-        serverFactory.addListener("default", listenerFactory.createListener());
-        serverFactory.setFtplets(map);
-        serverFactory.setConnectionConfig(connectionConfigFactory.createConnectionConfig());
-        serverFactory.setUserManager(FtpUser.mantemProperties());
-        server = serverFactory.createServer();
+        ListenerFactory listenerFactory = getListenerFactory();
+        ConnectionConfigFactory connectionConfigFactory = getConnectionConfigFactory();
+        serverConfig(serverFactory, listenerFactory, connectionConfigFactory);
 
         try {
             server.start();
@@ -43,7 +30,34 @@ public class FtpService {
         }
     }
 
-    public void stop() {
+    private void serverConfig(FtpServerFactory serverFactory, ListenerFactory listenerFactory, ConnectionConfigFactory connectionConfigFactory) {
+        Map<String, Ftplet> map = new HashMap<>();
+        map.put("FtpletListeners", new FtpLogin());
+        factoryConfig(serverFactory, listenerFactory, connectionConfigFactory, map);
+    }
+
+    private void factoryConfig(FtpServerFactory serverFactory, ListenerFactory listenerFactory, ConnectionConfigFactory connectionConfigFactory, Map<String, Ftplet> map) {
+        serverFactory.addListener("default", listenerFactory.createListener());
+        serverFactory.setFtplets(map);
+        serverFactory.setConnectionConfig(connectionConfigFactory.createConnectionConfig());
+        serverFactory.setUserManager(FtpUser.propertiesManager());
+        server = serverFactory.createServer();
+    }
+
+    private ConnectionConfigFactory getConnectionConfigFactory() {
+        ConnectionConfigFactory connectionConfigFactory = new ConnectionConfigFactory();
+        connectionConfigFactory.setAnonymousLoginEnabled(false);
+        return connectionConfigFactory;
+    }
+
+    private ListenerFactory getListenerFactory() {
+        ListenerFactory listenerFactory = new ListenerFactory();
+        listenerFactory.setPort(2021);
+        listenerFactory.setIdleTimeout(120000000);
+        return listenerFactory;
+    }
+
+    void stop() {
         if (!server.isStopped()) {
             server.stop();
             server = null;

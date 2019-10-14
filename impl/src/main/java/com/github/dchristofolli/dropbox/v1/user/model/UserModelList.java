@@ -19,4 +19,8 @@ public class UserModelList {
     public boolean contains(String userResponse) {
         return userModels.contains(userResponse);
     }
+
+    public void add(UserModel u) {
+        userModels.add(u);
+    }
 }

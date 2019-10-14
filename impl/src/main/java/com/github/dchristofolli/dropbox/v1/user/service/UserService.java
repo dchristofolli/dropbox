@@ -2,15 +2,15 @@ package com.github.dchristofolli.dropbox.v1.user.service;
 
 import com.github.dchristofolli.dropbox.v1.exception.ApiException;
 import com.github.dchristofolli.dropbox.v1.ftp.FtpUser;
+import com.github.dchristofolli.dropbox.v1.user.mapper.UserMapperImpl;
 import com.github.dchristofolli.dropbox.v1.user.model.UserModel;
 import com.github.dchristofolli.dropbox.v1.user.repository.UserEntity;
 import com.github.dchristofolli.dropbox.v1.user.repository.UserRepository;
-import com.github.dchristofolli.dropbox.v1.user.mapper.UserMapperImpl;
-import com.github.dchristofolli.dropbox.v1.user.model.UserModelList;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,8 +19,8 @@ public class UserService {
 
     private UserRepository userRepository;
 
-    public UserModelList findAll() {
-        UserModelList users = (UserModelList) userRepository
+    public List<UserModel> findAll() {
+        List<UserModel> users = userRepository
                 .findAll()
                 .stream()
                 .map(this::mapToModel)
@@ -35,7 +35,7 @@ public class UserService {
     }
 
     public UserModel createUser(UserModel user) {
-        FtpUser.salvaUsuario(user.getName().toLowerCase(), user.getPassword());
+        FtpUser.saveUser(user.getName().toLowerCase(), user.getPassword());
         return mapToModel(userRepository.save(UserMapperImpl.mapToEntity(user)));
     }
 
@@ -55,7 +55,7 @@ public class UserService {
                 }).orElseThrow(() -> new ApiException("Não encontrado", HttpStatus.NOT_FOUND));
     }
 
-    public UserModel mapToModel(UserEntity user) {
+    private UserModel mapToModel(UserEntity user) {
         return UserMapperImpl.mapToModel(user);
     }
 
