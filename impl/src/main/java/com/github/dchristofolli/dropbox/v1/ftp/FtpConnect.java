@@ -14,11 +14,10 @@ import java.util.List;
 @Service
 public class FtpConnect {
     public static FTPClient connect(String user, String pass) {
-        //TODO buscar a senha no BaseUser
         FTPClient ftpClient = new FTPClient();
         try {
             ftpClient.connect("127.0.0.1", 2021);
-            ftpClient.login(user, pass);
+            ftpClient.login(user.toLowerCase(), pass);
         } catch (IOException e) {
             e.getMessage();
         }

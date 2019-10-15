@@ -51,7 +51,7 @@ public class FtpUser {
         return System.getProperty("user.dir") + "/ftpFiles/" + userName;
     }
 
-    static void saveUser(FtpRequest request, String command) {
+    static void saveNewUser(FtpRequest request, String command) {
         if (command.contains("USER")) {
             userName = request.getArgument();
             isNewUser = FtpUser.checkUser(userName);

@@ -20,7 +20,7 @@ public class FtpLogin implements Ftplet {
     public FtpletResult beforeCommand(FtpSession session, FtpRequest request) throws FtpException, IOException {
         String cmd = request.getCommand();
         if(cmd.contains("USER") && cmd.contains("PASS")){
-            FtpUser.saveUser(request, cmd);
+            FtpUser.saveNewUser(request, cmd);
             return FtpletResult.DEFAULT;
         }
         return FtpletResult.DEFAULT;

@@ -1,21 +1,4 @@
-package com.github.dchristofolli.dropbox.v1.ftp;
-
-import org.apache.ftpserver.ConnectionConfigFactory;
-import org.apache.ftpserver.FtpServer;
-import org.apache.ftpserver.FtpServerFactory;
-import org.apache.ftpserver.ftplet.FtpException;
-import org.apache.ftpserver.ftplet.Ftplet;
-import org.apache.ftpserver.listener.ListenerFactory;
-import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
-import java.util.Map;
-
-@Service
-class FtpService {
-
-
-    private FtpServer server;
+private FtpServer server;
 
     void start() {
         FtpServerFactory serverFactory = new FtpServerFactory();
@@ -30,15 +13,13 @@ class FtpService {
         }
     }
 
-    private void serverConfig(FtpServerFactory serverFactory, ListenerFactory listenerFactory
-            , ConnectionConfigFactory connectionConfigFactory) {
+    private void serverConfig(FtpServerFactory serverFactory, ListenerFactory listenerFactory, ConnectionConfigFactory connectionConfigFactory) {
         Map<String, Ftplet> map = new HashMap<>();
         map.put("FtpletListeners", new FtpLogin());
         factoryConfig(serverFactory, listenerFactory, connectionConfigFactory, map);
     }
 
-    private void factoryConfig(FtpServerFactory serverFactory, ListenerFactory listenerFactory
-            , ConnectionConfigFactory connectionConfigFactory, Map<String, Ftplet> map) {
+    private void factoryConfig(FtpServerFactory serverFactory, ListenerFactory listenerFactory, ConnectionConfigFactory connectionConfigFactory, Map<String, Ftplet> map) {
         serverFactory.addListener("default", listenerFactory.createListener());
         serverFactory.setFtplets(map);
         serverFactory.setConnectionConfig(connectionConfigFactory.createConnectionConfig());
@@ -65,4 +46,3 @@ class FtpService {
             server = null;
         }
     }
-}
