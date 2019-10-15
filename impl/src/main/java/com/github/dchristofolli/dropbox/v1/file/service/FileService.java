@@ -3,7 +3,6 @@ package com.github.dchristofolli.dropbox.v1.file.service;
 import com.github.dchristofolli.dropbox.v1.file.model.FileModel;
 import com.github.dchristofolli.dropbox.v1.file.model.FileModelList;
 import com.github.dchristofolli.dropbox.v1.ftp.FtpConnect;
-import com.github.dchristofolli.dropbox.v1.ftp.StartServer;
 import com.github.dchristofolli.dropbox.v1.user.model.UserModel;
 import com.github.dchristofolli.dropbox.v1.user.service.UserService;
 import lombok.AllArgsConstructor;
@@ -23,15 +22,13 @@ import java.util.Objects;
 public class FileService {
     private UserService userService;
 
-    public void send(MultipartFile file, UserModel userInput) {
-
-        FTPClient connect = FtpConnect.connect(userInput.getName(), userInput.getPassword());
+    public void send(MultipartFile file, UserModel user) {
+        FTPClient connect = FtpConnect.connect(user.getName(), user.getPassword());
         try {
             connect.storeFile(file.getOriginalFilename(), file.getInputStream());
         } catch (IOException e) {
             e.getMessage();
         }
-        StartServer.restart();
     }
 
     public void delete(UserModel user, String fileName) throws IOException {
@@ -39,13 +36,14 @@ public class FileService {
         connect.deleteFile(fileName);
     }
 
-    public void download(String user, String fileName) throws IOException {
+    public void download(String id, String fileName) throws IOException { //TODO tratar as exceções com try catch
         List<UserModel> users = userService.findAll();
+        UserModel user = userService.findById(id);
         if (users.contains(user)) {
             FTPClient ftpClient = FtpConnect.connect(userService
-                    .findById(user)
+                    .findById(id)
                     .getName(), userService
-                    .findById(user)
+                    .findById(id)
                     .getPassword());
             FileOutputStream fileOutputStream;
             fileOutputStream = new FileOutputStream("/home/dchristofolli/DownloadsFTP/" + fileName);
@@ -68,8 +66,8 @@ public class FileService {
         }
     }
 
-    public Page<FileModel> pagedList(int page, int quantity, UserModel user) {
-        return FtpConnect.pagedList((List<FileModel>) Objects.requireNonNull(showUserFiles(user)), page, quantity);
+    public Page<FileModel> pagedList(int page, int quantity, UserModel user) { //TODO criar objeto request com os 3 params
+        return FtpConnect.pagedList((List<FileModel>) Objects.requireNonNull(showUserFiles(user)));
     }
 
     public Page<FileModel> listsSharedWithMe(int page, int quantity, String user) {

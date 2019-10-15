@@ -15,10 +15,9 @@ import java.io.IOException;
 class FileContractFacade {
     FileFacade facade;
 
-    void sendFile(MultipartFile file, String userId) {
-        //
+    ResponseEntity sendFile(MultipartFile file, String userId) {
         facade.sendFile(file, userId);
-
+        return new ResponseEntity(null, HttpStatus.OK);
     }
 
     ResponseEntity delete(String idUser, String fileName) throws IOException {
@@ -38,7 +37,7 @@ class FileContractFacade {
         facade.download(id, file);
     }
 
-    public void downloadSharedWithMe(String id, String file) throws IOException {
+    void downloadSharedWithMe(String id, String file) throws IOException {
         facade.downloadSharedWithMe(id, file);
     }
 }

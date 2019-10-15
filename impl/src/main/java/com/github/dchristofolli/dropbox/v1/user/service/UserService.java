@@ -4,7 +4,6 @@ import com.github.dchristofolli.dropbox.v1.exception.ApiException;
 import com.github.dchristofolli.dropbox.v1.ftp.FtpUser;
 import com.github.dchristofolli.dropbox.v1.user.mapper.UserMapperImpl;
 import com.github.dchristofolli.dropbox.v1.user.model.UserModel;
-import com.github.dchristofolli.dropbox.v1.user.model.UserModelList;
 import com.github.dchristofolli.dropbox.v1.user.repository.UserEntity;
 import com.github.dchristofolli.dropbox.v1.user.repository.UserRepository;
 import lombok.AllArgsConstructor;

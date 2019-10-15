@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class FileModel {
 
     @Autowired
-    UserModel userModel;
+    UserModel userModel; //TODO revisar
 
     public FileModel(FTPFile arquivoFTP) {
         this.setNomeArquivo(arquivoFTP.getName());

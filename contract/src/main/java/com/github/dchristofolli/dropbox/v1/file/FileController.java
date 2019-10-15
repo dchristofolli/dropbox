@@ -1,7 +1,6 @@
 package com.github.dchristofolli.dropbox.v1.file;
 
 import com.github.dchristofolli.dropbox.v1.file.model.FileModel;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -9,7 +8,6 @@ import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,6 +23,7 @@ public class FileController {
     // solucao mais simples, adicionar um header no request com o id do usuario
     FileContractFacade fileFacade;
 
+    // TODO rever as responses
     @ApiOperation("Envia o arquivo para o servidor FTP")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Ok"),
@@ -43,16 +42,15 @@ public class FileController {
 
     @ApiOperation("Exclui um arquivo de um usuário no servidor FTP")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Arquivo excluído"),
-            @ApiResponse(code = 204, message = "Arquivo não encontrado"),
+            @ApiResponse(code = 204, message = "Arquivo excluído"),
             @ApiResponse(code = 401, message = "Solicitação não autorizada"),
             @ApiResponse(code = 403, message = "Usuário não possui permissão"),
             @ApiResponse(code = 404, message = "Usuário não encontrado")
     })
     @DeleteMapping("/{idUser}")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity delete(@PathVariable String idUser, String fileName) throws IOException {
-        return fileFacade.delete(idUser, fileName);
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable String idUser, String fileName) throws IOException {
+        fileFacade.delete(idUser, fileName);
     }
 
     @ApiOperation("Lista paginada de arquivos")
@@ -67,7 +65,6 @@ public class FileController {
     public Page<FileModel> pagedList(@RequestParam(defaultValue = "1") int page,
                                      @RequestParam(defaultValue = "5") int quantity,
                                      @RequestParam(defaultValue = "5d78e7cbc7d0524eba5ad341") String user) {
-        ;
         return fileFacade.pagedList(page, quantity, user);
     }
 

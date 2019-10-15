@@ -14,6 +14,7 @@ import java.util.List;
 @Service
 public class FtpConnect {
     public static FTPClient connect(String user, String pass) {
+        //TODO buscar a senha no BaseUser
         FTPClient ftpClient = new FTPClient();
         try {
             ftpClient.connect("127.0.0.1", 2021);
@@ -24,13 +25,8 @@ public class FtpConnect {
         return ftpClient;
     }
 
-    public static Page<FileModel> pagedList(List<FileModel> files,
-                                            int page, int qtByPage) {
-        List<FileModel> list = new ArrayList<>();
-        for (FileModel f : files) {
-            list.add(f);
-        }
-        Page<FileModel> filePages = new PageImpl<>(list);
-        return filePages;
+    public static Page<FileModel> pagedList(List<FileModel> files) {
+        List<FileModel> list = new ArrayList<>(files);
+        return new PageImpl<>(list);
     }
 }

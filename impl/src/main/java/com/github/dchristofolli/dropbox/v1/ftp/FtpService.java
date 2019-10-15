@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class FtpService {
+class FtpService {
 
 
     private FtpServer server;

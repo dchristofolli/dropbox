@@ -13,8 +13,8 @@ import java.io.IOException;
 @Component
 @AllArgsConstructor
 public class FileFacade {
-    FileService fileService;
-    UserService userService;
+    private FileService fileService;
+    private UserService userService;
 
     public void sendFile(MultipartFile file, String userId) {
         fileService.send(file, userService.findById(userId));
@@ -39,4 +39,5 @@ public class FileFacade {
     public void downloadSharedWithMe(String id, String file) throws IOException {
         download(userService.findById(id).getFollower(), file);
     }
+
 }

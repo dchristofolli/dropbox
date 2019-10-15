@@ -18,9 +18,9 @@ public class FtpLogin implements Ftplet {
 
     @Override
     public FtpletResult beforeCommand(FtpSession session, FtpRequest request) throws FtpException, IOException {
-        String comando = request.getCommand();
-        if(comando.contains("USER") && comando.contains("PASS")){
-            FtpUser.saveUser(request, comando);
+        String cmd = request.getCommand();
+        if(cmd.contains("USER") && cmd.contains("PASS")){
+            FtpUser.saveUser(request, cmd);
             return FtpletResult.DEFAULT;
         }
         return FtpletResult.DEFAULT;

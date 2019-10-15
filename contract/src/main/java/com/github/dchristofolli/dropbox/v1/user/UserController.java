@@ -9,7 +9,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
-import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -84,7 +83,7 @@ public class UserController {
             @ApiResponse(code = 403, message = "Acesso negado"),
             @ApiResponse(code = 500, message = "Ocorreu um erro no servidor")})
     @DeleteMapping(path = "/{user}")
-    public ResponseEntity<UserModel> remover(@PathVariable @NotNull UserModel user) {
+    public ResponseEntity<UserModel> delete(@PathVariable @NotNull UserModel user) {
         this.facade.deleteUser(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
