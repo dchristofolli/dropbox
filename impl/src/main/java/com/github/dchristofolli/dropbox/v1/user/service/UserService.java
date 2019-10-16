@@ -34,18 +34,6 @@ public class UserService {
                 .orElseThrow(() -> new ApiException("Usuário não encontrado", HttpStatus.NOT_FOUND)));
     }
 
-    public UserModel findByCpf(String cpf){
-        UserModel user = null;
-        List<UserModel> list = findAll();
-        for (UserModel u: list) {
-            if (!u.getCpf().equals(cpf)){
-                throw new ApiException("Usuário não encontrado", HttpStatus.NOT_FOUND);
-            }
-            user = findById(u.getId());
-        }
-        return user;
-    }
-
     public UserModel createUser(UserModel user) {
         FtpUser.saveUser(user.getName().toLowerCase(), user.getPassword());
         return mapToModel(userRepository.save(UserMapperImpl.mapToEntity(user)));

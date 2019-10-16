@@ -1,27 +1,16 @@
 package com.github.dchristofolli.dropbox.v1.file.model;
 
-import com.github.dchristofolli.dropbox.v1.user.model.UserModel;
-import org.apache.commons.net.ftp.FTPFile;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class FileModel {
-
-    @Autowired
-    UserModel userModel; //TODO revisar
-
-    public FileModel(FTPFile arquivoFTP) {
-        this.setNomeArquivo(arquivoFTP.getName());
-        this.setTamanhoArquivo(arquivoFTP.getSize() + " kb");
-        this.setData(arquivoFTP.getRawListing());
-    }
-
-    private void setNomeArquivo(String nomeArquivo) {
-    }
-
-    private void setTamanhoArquivo(String tamanhoArquivo) {
-    }
-
-    private void setData(String data) {
-    }
-
+    String fileName;
+    String fileSize;
+    String data;
 }

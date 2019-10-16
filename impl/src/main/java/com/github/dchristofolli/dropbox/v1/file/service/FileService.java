@@ -1,7 +1,7 @@
 package com.github.dchristofolli.dropbox.v1.file.service;
 
-import com.github.dchristofolli.dropbox.v1.file.model.FileModel;
-import com.github.dchristofolli.dropbox.v1.file.model.FileModelList;
+import com.github.dchristofolli.dropbox.v1.file.model.FileMapper;
+import com.github.dchristofolli.dropbox.v1.file.model.FileModelRequest;
 import com.github.dchristofolli.dropbox.v1.ftp.FtpConnect;
 import com.github.dchristofolli.dropbox.v1.user.model.UserModel;
 import com.github.dchristofolli.dropbox.v1.user.service.UserService;
@@ -14,8 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @AllArgsConstructor
 @Service
@@ -31,12 +31,16 @@ public class FileService {
         }
     }
 
-    public void delete(UserModel user, String fileName) throws IOException {
+    public void delete(UserModel user, String fileName) {
         FTPClient connect = FtpConnect.connect(user.getName(), user.getPassword());
-        connect.deleteFile(fileName);
+        try {
+            connect.deleteFile(fileName);
+        } catch (IOException e) {
+            e.getMessage();
+        }
     }
 
-    public void download(String id, String fileName) throws IOException { //TODO tratar as exceções com try catch
+    public void download(String id, String fileName) {
         List<UserModel> users = userService.findAll();
         UserModel user = userService.findById(id);
         if (users.contains(user)) {
@@ -45,19 +49,22 @@ public class FileService {
                     .getName(), userService
                     .findById(id)
                     .getPassword());
-            FileOutputStream fileOutputStream;
-            fileOutputStream = new FileOutputStream("/home/dchristofolli/DownloadsFTP/" + fileName);
-            ftpClient.retrieveFile(fileName, fileOutputStream);
+            try {
+                ftpClient.retrieveFile(fileName, new FileOutputStream
+                        ("/home/dchristofolli/DownloadsFTP/" + fileName));
+            } catch (IOException e) {
+                e.getMessage();
+            }
         }
     }
 
-    private FileModelList showUserFiles(UserModel user) {
+    private List<FileMapper> showUserFiles(UserModel user) {
         FTPClient connect = FtpConnect.connect(user.getName(), user.getPassword());
         try {
             FTPFile[] files = connect.listFiles();
-            FileModelList fileModelList = null;
+            ArrayList<FileMapper> fileModelList = new ArrayList<>();
             for (FTPFile ftpFile : files) {
-                fileModelList.add(new FileModel(ftpFile));
+                fileModelList.add(new FileMapper(ftpFile));
             }
             return fileModelList;
         } catch (IOException e) {
@@ -66,11 +73,17 @@ public class FileService {
         }
     }
 
-    public Page<FileModel> pagedList(int page, int quantity, UserModel user) { //TODO criar objeto request com os 3 params
-        return FtpConnect.pagedList((List<FileModel>) Objects.requireNonNull(showUserFiles(user)));
+    public Page<FileMapper> pagedList(FileModelRequest request) {
+        return FtpConnect.pagedList((ArrayList<FileMapper>) showUserFiles(request.getUserModel()),
+                request.getPage(), request.getQuantity());
     }
 
-    public Page<FileModel> listsSharedWithMe(int page, int quantity, String user) {
-        return pagedList(page, quantity, userService.findById(userService.findById(user).getFollower()));
+    public Page<FileMapper> listsSharedWithMe(FileModelRequest request) {
+        FileModelRequest userRequest = FileModelRequest.builder()
+                .page(request.getPage())
+                .quantity(request.getQuantity())
+                .userModel(userService.findById(request.getUserModel().getFollower()))
+                .build();
+        return pagedList(userRequest);
     }
 }

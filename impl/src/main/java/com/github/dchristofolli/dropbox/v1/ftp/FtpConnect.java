@@ -1,7 +1,7 @@
 package com.github.dchristofolli.dropbox.v1.ftp;
 
 
-import com.github.dchristofolli.dropbox.v1.file.model.FileModel;
+import com.github.dchristofolli.dropbox.v1.file.model.FileMapper;
 import org.apache.commons.net.ftp.FTPClient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -24,8 +24,10 @@ public class FtpConnect {
         return ftpClient;
     }
 
-    public static Page<FileModel> pagedList(List<FileModel> files) {
-        List<FileModel> list = new ArrayList<>(files);
+    public static Page<FileMapper> pagedList(ArrayList<FileMapper> files,
+                                             int page, int quantity) {
+        List<FileMapper> list = new ArrayList<>();
+        list.addAll(files);
         return new PageImpl<>(list);
     }
 }

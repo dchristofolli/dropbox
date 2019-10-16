@@ -16,8 +16,6 @@ class UserContractFacade {
         return UserMapperContract.mapToContract(facade.findById(id));
     }
 
-    UserResponse findByCpf(String cpf){return UserMapperContract.mapToContract(facade.findByCpf(cpf));}
-
     UserResponse createUser(UserRequest user) {
         return UserMapperContract.mapToContract(facade.createUser(UserMapperContract.mapToImpl(user)));
     }

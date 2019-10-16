@@ -10,9 +10,9 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class FileModelList {
-    List<FileModel> files;
+    List<FileMapper> files;
 
-    public void add(FileModel ftpFile) {
+    public void add(FileMapper ftpFile) {
         files.add(ftpFile);
     }
 }
