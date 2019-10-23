@@ -19,11 +19,7 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/dropbox/arquivos")
 public class FileController {
-    // encodar user:password em base64 (ver qual é a classe java que faz isso) e colocar no header na hora de enviar o request
-    // solucao mais simples, adicionar um header no request com o id do usuario
     FileContractFacade fileFacade;
-
-    // TODO rever as responses
     @ApiOperation("Envia o arquivo para o servidor FTP")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Ok"),
@@ -64,7 +60,7 @@ public class FileController {
     @GetMapping
     public Page<FileModel> pagedList(@RequestParam(defaultValue = "1") int page,
                                      @RequestParam(defaultValue = "5") int quantity,
-                                     @RequestParam(defaultValue = "5d78e7cbc7d0524eba5ad341") String user) {
+                                     @RequestParam String user) {
         return fileFacade.pagedList(page, quantity, user);
     }
 

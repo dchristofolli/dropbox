@@ -20,7 +20,7 @@ public class FileFacade {
         fileService.send(file, userService.findById(userId));
     }
 
-    public void delete(String idUser, String fileName) throws IOException {
+    public void delete(String idUser, String fileName) {
         fileService.delete(userService.findById(idUser), fileName);
     }
 

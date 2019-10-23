@@ -1,9 +1,9 @@
 package com.github.dchristofolli.dropbox.v1.user;
 
+import com.github.dchristofolli.dropbox.v1.user.model.response.UserResponse;
 import com.github.dchristofolli.dropbox.v1.user.mapper.UserMapperContract;
 import com.github.dchristofolli.dropbox.v1.user.model.UserModel;
 import com.github.dchristofolli.dropbox.v1.user.model.request.UserRequest;
-import com.github.dchristofolli.dropbox.v1.user.model.response.UserResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 

@@ -1,9 +1,9 @@
 package com.github.dchristofolli.dropbox.v1.user;
 
+import com.github.dchristofolli.dropbox.v1.user.model.response.UserResponse;
 import com.github.dchristofolli.dropbox.v1.exception.ApiException;
 import com.github.dchristofolli.dropbox.v1.user.model.UserModel;
 import com.github.dchristofolli.dropbox.v1.user.model.request.UserRequest;
-import com.github.dchristofolli.dropbox.v1.user.model.response.UserResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -82,10 +82,11 @@ public class UserController {
             @ApiResponse(code = 401, message = "Não autorizado"),
             @ApiResponse(code = 403, message = "Acesso negado"),
             @ApiResponse(code = 500, message = "Ocorreu um erro no servidor")})
-    @DeleteMapping(path = "/{user}")
-    public ResponseEntity<UserModel> delete(@PathVariable @NotNull UserModel user) {
-        this.facade.deleteUser(user);
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<UserModel> delete(@PathVariable @NotNull String id) {
+        this.facade.deleteUser(UserModel.builder().id(id).build());
         return new ResponseEntity<>(HttpStatus.OK);
+        // TODO tirar o retorno
     }
 
     @ResponseStatus(HttpStatus.OK)
