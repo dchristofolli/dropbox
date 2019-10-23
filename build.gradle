@@ -7,6 +7,11 @@ plugins {
 apply plugin: 'jacoco'
 apply plugin: 'io.spring.dependency-management'
 
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
 group = 'com.github.dchristofolli'
 version = '1'
 configurations {
@@ -16,10 +21,7 @@ configurations {
     }
 
 }
-repositories {
-    mavenCentral()
-    jcenter()
-}
+
 dependencies {
     implementation project(':contract')
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'

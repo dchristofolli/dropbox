@@ -35,18 +35,6 @@ public class UserController {
         return facade.findById(id);
     }
 
-    @ResponseStatus(HttpStatus.OK)
-    @ApiOperation("Exibe os dados de um usuário recebendo o CPF")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "Usuário encontrado"),
-            @ApiResponse(code = 401, message = "Usuário inválido"),
-            @ApiResponse(code = 404, message = "Usuário não encontrado", response = ApiException.class),
-            @ApiResponse(code = 500, message = "Ocorreu um erro no servidor")})
-    @GetMapping("/cpf")
-    public UserResponse findByCpf(@RequestParam String cpf){
-        return facade.findByCpf(cpf);
-    }
-
     @ResponseStatus(HttpStatus.CREATED)
     @NotNull
     @ApiOperation("Cadastra um novo usuário")

@@ -14,10 +14,6 @@ public class UserFacade {
         return service.findById(id);
     }
 
-    public UserModel findByCpf(String cpf){
-        return service.findByCpf(cpf);
-    }
-
     public UserModel createUser(UserModel user) {
         return service.createUser(user);
     }
