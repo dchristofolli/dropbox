@@ -55,8 +55,8 @@ public class UserServiceTest {
     public void deleteById() {
         UserModel user = CreateUsers.createUser();
         when(userService.findById(user.getId())).thenReturn(user);
-        userService.deleteUser(user);
-        verify(userService, times(1)).deleteUser(user);
+        userService.deleteUser(user.getId());
+        verify(userService, times(1)).deleteUser(user.getId());
     }
 
     @Test

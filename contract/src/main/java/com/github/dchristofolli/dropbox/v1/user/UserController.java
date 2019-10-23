@@ -4,15 +4,13 @@ import com.github.dchristofolli.dropbox.v1.exception.ApiException;
 import com.github.dchristofolli.dropbox.v1.user.model.UserModel;
 import com.github.dchristofolli.dropbox.v1.user.model.request.UserRequest;
 import com.github.dchristofolli.dropbox.v1.user.model.response.UserResponse;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.websocket.server.PathParam;
 
@@ -47,15 +45,14 @@ public class UserController {
         return this.facade.createUser(user);
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.OK)
     @ApiOperation("Atualiza os dados de um usuário")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Ok"),
-            @ApiResponse(code = 201, message = "Usuário atualizado com sucesso"),
             @ApiResponse(code = 401, message = "Não autorizado"),
             @ApiResponse(code = 404, message = "Dados inválidos"),
             @ApiResponse(code = 500, message = "Ocorreu um erro no servidor")})
-    @PutMapping(path = "/{id}")
+    @PatchMapping(path = "/{id}")
     public UserResponse update(@Valid @PathVariable(name = "id") String id,
                                @RequestBody UserRequest user) {
         return this.facade.update(user);
@@ -66,12 +63,11 @@ public class UserController {
     @ApiOperation("Exclui o cadastro de um usuário")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Usuário excluído"),
-            @ApiResponse(code = 204, message = "Usuário não encontrado"),
             @ApiResponse(code = 401, message = "Não autorizado"),
             @ApiResponse(code = 403, message = "Acesso negado"),
             @ApiResponse(code = 500, message = "Ocorreu um erro no servidor")})
-    @DeleteMapping(path = "/{id}")
-    public void delete(@PathVariable @NotNull String id) {
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable("id") @NotNull String id) {
         this.facade.deleteUser(id);
     }
 

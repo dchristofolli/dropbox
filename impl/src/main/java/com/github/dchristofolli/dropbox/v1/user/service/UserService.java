@@ -44,8 +44,8 @@ public class UserService {
     }
 
     public void deleteUser(String id) {
-        if (!userRepository.existsById(id)) {
-            throw new ApiException("Usuário não existe", HttpStatus.BAD_REQUEST);
+        if ((!userRepository.existsById(id))){
+            throw new ApiException("Digite um usuário válido", HttpStatus.BAD_REQUEST);
         }
         userRepository.deleteById(id);
     }
