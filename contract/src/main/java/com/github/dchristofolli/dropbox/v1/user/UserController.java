@@ -1,20 +1,20 @@
 package com.github.dchristofolli.dropbox.v1.user;
 
-import com.github.dchristofolli.dropbox.v1.user.model.response.UserResponse;
 import com.github.dchristofolli.dropbox.v1.exception.ApiException;
 import com.github.dchristofolli.dropbox.v1.user.model.UserModel;
 import com.github.dchristofolli.dropbox.v1.user.model.request.UserRequest;
+import com.github.dchristofolli.dropbox.v1.user.model.response.UserResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.websocket.server.PathParam;
 
 @AllArgsConstructor
 @RestController
@@ -30,8 +30,8 @@ public class UserController {
             @ApiResponse(code = 401, message = "Usuário inválido"),
             @ApiResponse(code = 404, message = "Usuário não encontrado", response = ApiException.class),
             @ApiResponse(code = 500, message = "Ocorreu um erro no servidor")})
-    @GetMapping("/id")
-    public UserResponse findById(@RequestParam String id) {
+    @GetMapping("/{id}")
+    public UserResponse findById(@PathVariable(value = "id") String id) {
         return facade.findById(id);
     }
 
@@ -61,7 +61,7 @@ public class UserController {
         return this.facade.update(user);
     }
 
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @NotNull
     @ApiOperation("Exclui o cadastro de um usuário")
     @ApiResponses({
@@ -71,17 +71,15 @@ public class UserController {
             @ApiResponse(code = 403, message = "Acesso negado"),
             @ApiResponse(code = 500, message = "Ocorreu um erro no servidor")})
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<UserModel> delete(@PathVariable @NotNull String id) {
-        this.facade.deleteUser(UserModel.builder().id(id).build());
-        return new ResponseEntity<>(HttpStatus.OK);
-        // TODO tirar o retorno
+    public void delete(@PathVariable @NotNull String id) {
+        this.facade.deleteUser(id);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation("Permite que outro usuário tenha acesso aos arquivos")
     @ApiResponses({
     })
-    @PutMapping
+    @PatchMapping
     public UserModel allowFollower(@RequestParam String idUser,
                                    @RequestParam String idFollower) {
         return facade.allowFollower(idUser, idFollower);

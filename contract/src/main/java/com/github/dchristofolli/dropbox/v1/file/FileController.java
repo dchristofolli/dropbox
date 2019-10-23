@@ -20,10 +20,7 @@ import javax.validation.constraints.NotNull;
 @RequestMapping("/dropbox/arquivos")
 public class FileController {
     FileContractFacade fileFacade;
-<<<<<<< HEAD
-=======
 
->>>>>>> c36e740bfccbbe49aeca563585c738fd3efe0afb
     @ApiOperation("Envia o arquivo para o servidor FTP")
     @ApiResponses({
             @ApiResponse(code = 226, message = "Arquivo enviado"),
@@ -58,15 +55,8 @@ public class FileController {
     })
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
-<<<<<<< HEAD
-    public Page<FileModel> pagedList(@RequestParam(defaultValue = "1") int page,
-                                     @RequestParam(defaultValue = "5") int quantity,
-                                     @RequestParam String user) {
-        return fileFacade.pagedList(page, quantity, user);
-=======
     public Page<FileMapper> pagedList(@RequestParam FileModelRequest fileModelRequest) {
         return fileFacade.pagedList(fileModelRequest);
->>>>>>> c36e740bfccbbe49aeca563585c738fd3efe0afb
     }
 
     @ApiOperation("Lista paginada de arquivos compartilhados comigo")

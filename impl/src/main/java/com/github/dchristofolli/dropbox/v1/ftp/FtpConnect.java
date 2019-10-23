@@ -24,20 +24,10 @@ public class FtpConnect {
         return ftpClient;
     }
 
-<<<<<<< HEAD
-    public static Page<FileModel> pagedList(List<FileModel> files) {
-        List<FileModel> list = new ArrayList<>();
-        for (FileModel f : files) {
-            list.add(f);
-        }
-        Page<FileModel> filePages = new PageImpl<>(list);
-        return filePages;
-=======
     public static Page<FileMapper> pagedList(ArrayList<FileMapper> files,
                                              int page, int quantity) {
         List<FileMapper> list = new ArrayList<>();
         list.addAll(files);
         return new PageImpl<>(list);
->>>>>>> c36e740bfccbbe49aeca563585c738fd3efe0afb
     }
 }

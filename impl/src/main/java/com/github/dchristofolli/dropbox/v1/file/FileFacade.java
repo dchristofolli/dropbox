@@ -19,11 +19,7 @@ public class FileFacade {
         fileService.send(file, userService.findById(userId));
     }
 
-<<<<<<< HEAD
     public void delete(String idUser, String fileName) {
-=======
-    public void delete(String idUser, String fileName)  {
->>>>>>> c36e740bfccbbe49aeca563585c738fd3efe0afb
         fileService.delete(userService.findById(idUser), fileName);
     }
 

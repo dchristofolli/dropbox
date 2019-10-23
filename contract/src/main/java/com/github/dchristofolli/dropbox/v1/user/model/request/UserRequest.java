@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Data
@@ -17,12 +17,13 @@ import javax.validation.constraints.Size;
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserRequest {
-    @NotNull(message = "{nameNotNull}")
+    @Size(min = 3, message = "{nameMinSize}")
     private String name;
 
     @CPF(message = "{invalidCpf}")
     private String cpf;
 
+    @NotBlank(message = "{emailNotBlank}")
     @Email(message = "{invalidEmail}")
     private String email;
 

@@ -18,8 +18,8 @@ public class UserFacade {
         return service.createUser(user);
     }
 
-    public void deleteUser(UserModel user) {
-        service.deleteUser(user);
+    public void deleteUser(String id) {
+        service.deleteUser(id);
     }
 
     public UserModel allowFollower(String idUser, String idFollower) {

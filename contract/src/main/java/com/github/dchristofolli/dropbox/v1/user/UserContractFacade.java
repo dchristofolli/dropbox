@@ -24,8 +24,8 @@ class UserContractFacade {
         return UserMapperContract.mapToContract(facade.updateUser(UserMapperContract.mapToImpl(user)));
     }
 
-    void deleteUser(UserModel user) {
-        facade.deleteUser(user);
+    void deleteUser(String id) {
+        facade.deleteUser(id);
     }
 
     UserModel allowFollower(String idUser, String idFollower) {

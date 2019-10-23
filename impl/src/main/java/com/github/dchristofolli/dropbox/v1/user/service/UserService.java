@@ -1,11 +1,11 @@
 package com.github.dchristofolli.dropbox.v1.user.service;
 
 import com.github.dchristofolli.dropbox.v1.exception.ApiException;
-import com.github.dchristofolli.dropbox.v1.user.repository.UserEntity;
-import com.github.dchristofolli.dropbox.v1.user.repository.UserRepository;
 import com.github.dchristofolli.dropbox.v1.ftp.FtpUser;
 import com.github.dchristofolli.dropbox.v1.user.mapper.UserMapperImpl;
 import com.github.dchristofolli.dropbox.v1.user.model.UserModel;
+import com.github.dchristofolli.dropbox.v1.user.repository.UserEntity;
+import com.github.dchristofolli.dropbox.v1.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -34,18 +34,6 @@ public class UserService {
                 .orElseThrow(() -> new ApiException("Usuário não encontrado", HttpStatus.NOT_FOUND)));
     }
 
-    public UserModel findByCpf(String cpf) {
-        UserModel user = null;
-        List<UserModel> list = findAll();
-        for (UserModel u : list) {
-            if (!u.getCpf().equals(cpf)) {
-                throw new ApiException("Usuário não encontrado", HttpStatus.NOT_FOUND);
-            }
-            user = findById(u.getId());
-        }
-        return user;
-    }
-
     public UserModel createUser(UserModel user) {
         FtpUser.saveUser(user.getName().toLowerCase(), user.getPassword());
         return mapToModel(userRepository.save(UserMapperImpl.mapToEntity(user)));
@@ -55,11 +43,11 @@ public class UserService {
         return mapToModel(userRepository.save(UserMapperImpl.mapToEntity(user)));
     }
 
-    public void deleteUser(UserModel user) {
-        if (!userRepository.existsById(user.getId())) {
+    public void deleteUser(String id) {
+        if (!userRepository.existsById(id)) {
             throw new ApiException("Usuário não existe", HttpStatus.BAD_REQUEST);
         }
-        userRepository.deleteById(user.getId());
+        userRepository.deleteById(id);
     }
 
     public UserModel allowFollower(String userId, String followerId) {
