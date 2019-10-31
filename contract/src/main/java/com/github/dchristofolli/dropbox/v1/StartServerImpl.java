@@ -1,10 +1,12 @@
 package com.github.dchristofolli.dropbox.v1;
 
 import com.github.dchristofolli.dropbox.v1.ftp.StartServer;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StartServerImpl {
-    static StartServer startServer;
-    public static void startServer(){
-        startServer.run();
+    public static void startServer() {
+        StartServer.run();
     }
 }

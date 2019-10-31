@@ -1,6 +1,9 @@
 package com.github.dchristofolli.dropbox.v1.file.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Builder
 @AllArgsConstructor

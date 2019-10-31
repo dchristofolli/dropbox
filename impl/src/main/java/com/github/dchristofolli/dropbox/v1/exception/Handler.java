@@ -26,13 +26,13 @@ public class Handler {
     }
 
     @ExceptionHandler(ApiException.class)
-    public ResponseEntity handleApiException(ApiException apiException) {
-        return new ResponseEntity(apiException.getMessage(), apiException.getStatus());
+    public ResponseEntity<String> handleApiException(ApiException apiException) {
+        return new ResponseEntity<>(apiException.getMessage(), apiException.getStatus());
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity handleException(Exception e) {
-        return new ResponseEntity(ErrorModel.builder()
+    public ResponseEntity<ErrorModel> handleException(Exception e) {
+        return new ResponseEntity<>(ErrorModel.builder()
                 .message("Unexpected Error")
                 .error(e.getClass().getName())
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)

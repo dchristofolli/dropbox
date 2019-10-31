@@ -1,7 +1,7 @@
 package com.github.dchristofolli.dropbox.v1.user.mapper;
 
-import com.github.dchristofolli.dropbox.v1.user.repository.UserEntity;
 import com.github.dchristofolli.dropbox.v1.user.model.UserModel;
+import com.github.dchristofolli.dropbox.v1.user.repository.UserEntity;
 
 
 public class UserMapperImpl {

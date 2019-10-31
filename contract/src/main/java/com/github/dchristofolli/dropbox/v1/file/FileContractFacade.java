@@ -14,14 +14,14 @@ import org.springframework.web.multipart.MultipartFile;
 class FileContractFacade {
     FileFacade facade;
 
-    ResponseEntity sendFile(MultipartFile file, String userId) {
+    void sendFile(MultipartFile file, String userId) {
         facade.sendFile(file, userId);
-        return new ResponseEntity(null, HttpStatus.OK);
+        new ResponseEntity<>("Ok", HttpStatus.OK);
     }
 
-    ResponseEntity delete(String idUser, String fileName) {
+    void delete(String idUser, String fileName) {
         facade.delete(idUser, fileName);
-        return new ResponseEntity(null, HttpStatus.OK);
+        new ResponseEntity<>("Ok", HttpStatus.OK);
     }
 
     Page<FileMapper> pagedList(FileModelRequest request) {

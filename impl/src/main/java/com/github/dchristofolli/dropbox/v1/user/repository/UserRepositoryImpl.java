@@ -13,6 +13,7 @@ import java.util.List;
 public class UserRepositoryImpl implements UserRepositoryCustom {
 
     private MongoTemplate mongoTemplate;
+
     @Override
     public List<UserModel> find(UserModel user) {
         Criteria criteria = Criteria.where("inactivationDate").exists(false);
@@ -25,22 +26,22 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
     }
 
     private void criteriaByEmail(String email, Criteria criteria) {
-        if(!ObjectUtils.isEmpty(email))
+        if (!ObjectUtils.isEmpty(email))
             criteria.and("email").regex(email);
     }
 
     private void criteriaByUserName(String username, Criteria criteria) {
-        if(!ObjectUtils.isEmpty(username))
+        if (!ObjectUtils.isEmpty(username))
             criteria.and("username").regex(username);
     }
 
     private void criteriaByCpf(String cpf, Criteria criteria) {
-        if(!ObjectUtils.isEmpty(cpf))
+        if (!ObjectUtils.isEmpty(cpf))
             criteria.and("cpf").regex(cpf);
     }
 
     private void criteriaById(String id, Criteria criteria) {
-        if(!ObjectUtils.isEmpty(id))
+        if (!ObjectUtils.isEmpty(id))
             criteria.and("id").regex(id);
     }
 }

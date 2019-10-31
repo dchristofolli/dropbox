@@ -1,5 +1,6 @@
 package com.github.dchristofolli.dropbox.v1.config;
 
+
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

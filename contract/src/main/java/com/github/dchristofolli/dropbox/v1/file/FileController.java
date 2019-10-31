@@ -12,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.NotNull;
 
 @Api
 @AllArgsConstructor
@@ -72,7 +71,6 @@ public class FileController {
     }
 
     @ApiOperation("Faz o download do arquivo para a máquina local")
-    @NotNull
     @ApiResponses({
             @ApiResponse(code = 200, message = "Arquivo baixado com sucesso"),
             @ApiResponse(code = 403, message = "Operação não permitida para o usuário"),

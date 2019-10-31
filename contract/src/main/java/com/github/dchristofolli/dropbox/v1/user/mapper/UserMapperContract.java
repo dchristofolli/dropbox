@@ -3,7 +3,10 @@ package com.github.dchristofolli.dropbox.v1.user.mapper;
 import com.github.dchristofolli.dropbox.v1.user.model.UserModel;
 import com.github.dchristofolli.dropbox.v1.user.model.response.UserResponse;
 import com.github.dchristofolli.dropbox.v1.user.model.request.UserRequest;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserMapperContract {
     public static UserResponse mapToContract(UserModel user) {
         return UserResponse.builder().

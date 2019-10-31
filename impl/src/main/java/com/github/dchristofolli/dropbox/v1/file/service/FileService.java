@@ -2,10 +2,9 @@ package com.github.dchristofolli.dropbox.v1.file.service;
 
 import com.github.dchristofolli.dropbox.v1.file.model.FileMapper;
 import com.github.dchristofolli.dropbox.v1.file.model.FileModelRequest;
+import com.github.dchristofolli.dropbox.v1.ftp.FtpConnect;
 import com.github.dchristofolli.dropbox.v1.user.model.UserModel;
 import com.github.dchristofolli.dropbox.v1.user.service.UserService;
-import com.github.dchristofolli.dropbox.v1.file.model.FileModel;
-import com.github.dchristofolli.dropbox.v1.ftp.FtpConnect;
 import lombok.AllArgsConstructor;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
@@ -16,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @AllArgsConstructor
@@ -63,14 +62,12 @@ public class FileService {
 
     private List<FileMapper> showUserFiles(UserModel user) {
         FTPClient connect = FtpConnect.connect(user.getName(), user.getPassword());
-        try{
+        try {
             FTPFile[] files = connect.listFiles();
-            ArrayList<FTPFile> fileModelList = new ArrayList<>();
-            fileModelList.addAll(Arrays.asList(files));
         } catch (IOException e) {
             e.getMessage();
         }
-        return null;
+        return Collections.emptyList();
     }
 
     public Page<FileMapper> pagedList(FileModelRequest request) {

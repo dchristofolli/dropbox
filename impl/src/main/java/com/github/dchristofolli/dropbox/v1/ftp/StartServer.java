@@ -3,11 +3,12 @@ package com.github.dchristofolli.dropbox.v1.ftp;
 
 public class StartServer {
     private static FtpService ftpService = new FtpService();
-    public StartServer(){
+
+    public StartServer() {
 
     }
 
-    public static void run(){
+    public static void run() {
         ftpService.start();
     }
 

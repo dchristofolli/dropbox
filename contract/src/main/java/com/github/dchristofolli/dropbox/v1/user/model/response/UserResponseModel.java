@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserResponseModel {
-    @JsonProperty(value="id")
+    @JsonProperty(value = "id")
     private String id;
-    @JsonProperty(value="name")
+    @JsonProperty(value = "name")
     private String name;
 }

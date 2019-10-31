@@ -1,5 +1,7 @@
 package com.github.dchristofolli.dropbox.v1.ftp;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.apache.ftpserver.ftplet.*;
 import org.apache.ftpserver.usermanager.PropertiesUserManagerFactory;
 import org.apache.ftpserver.usermanager.impl.BaseUser;
@@ -10,18 +12,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FtpUser {
     private static String userName;
     private static boolean isNewUser;
 
 
     static UserManager propertiesManager() {
-        PropertiesUserManagerFactory umf = new PropertiesUserManagerFactory();
-        try {
-            new File("users.properties").createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        var umf = new PropertiesUserManagerFactory();
+        new File("users.properties");
         umf.setFile(new File("users.properties"));
         return umf.createUserManager();
     }
@@ -42,7 +41,7 @@ public class FtpUser {
         try {
             Runtime.getRuntime().exec("mkdir " + user.getHomeDirectory());
             userManager.save(user);
-        } catch (Exception e) {
+        } catch (FtpException | IOException e) {
             e.getMessage();
         }
     }
