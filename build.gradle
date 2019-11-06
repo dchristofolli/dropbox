@@ -7,16 +7,11 @@ plugins {
 
 group = 'com.github.dchristofolli'
 version = '1'
-configurations {
-    developmentOnly
-    runtimeClasspath {
-        extendsFrom developmentOnly
-    }
-}
 
 dependencies {
     implementation project(':contract')
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
 }
 
 allprojects {
