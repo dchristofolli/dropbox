@@ -1,4 +1,4 @@
-package com.github.dchristofolli.dropbox.v1.service;
+package com.github.dchristofolli.dropbox.v1.user.service;
 
 import com.github.dchristofolli.dropbox.v1.user.model.UserModel;
 

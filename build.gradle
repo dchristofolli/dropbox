@@ -1,8 +1,7 @@
 plugins {
     id 'org.springframework.boot' version '2.1.8.RELEASE'
     id 'java'
-    id "org.sonarqube" version "2.7.1"
-    id 'jacoco'
+    id "org.sonarqube" version "2.7"
 }
 
 group = 'com.github.dchristofolli'
@@ -10,13 +9,13 @@ version = '1'
 
 dependencies {
     implementation project(':contract')
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
 }
 
 allprojects {
     apply plugin: 'java'
     apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'org.sonarqube'
+    apply plugin: 'jacoco'
 
     group = 'com.github.dchristofolli'
     version = '1'
@@ -55,7 +54,4 @@ allprojects {
 
 test {
     useJUnitPlatform()
-    testLogging {
-        events "passed", "skipped", "failed"
-    }
 }
