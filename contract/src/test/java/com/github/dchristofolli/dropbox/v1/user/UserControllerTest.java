@@ -5,10 +5,10 @@ import com.github.dchristofolli.dropbox.v1.user.repository.UserRepository;
 import com.github.dchristofolli.dropbox.v1.user.stub.UserStub;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -24,15 +24,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
 public class UserControllerTest {
-    @Mock
+    @MockBean
     UserRepository userRepository;
     @Autowired
     MockMvc mockMvc;
 
     @Test
     public void findById() throws Exception {
-        UserEntity userModel = UserStub.userEntityStub();
-        given(userRepository.findById(userModel.getId())).willReturn(Optional.of(userModel));
+        UserEntity userEntity = UserStub.userEntityStub();
+        given(userRepository.findById(userEntity.getId())).willReturn(Optional.of(UserStub.userEntityStub()));
         this.mockMvc.perform(get("/dropbox/v1/users/13454")).andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value("13454"));
     }

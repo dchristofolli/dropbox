@@ -17,6 +17,7 @@ import javax.validation.constraints.Size;
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserRequest {
+    private String id;
     @Size(min = 3, message = "{nameMinSize}")
     private String name;
 

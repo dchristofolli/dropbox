@@ -1,8 +1,8 @@
 package com.github.dchristofolli.dropbox.v1.user.mapper;
 
 import com.github.dchristofolli.dropbox.v1.user.model.UserModel;
-import com.github.dchristofolli.dropbox.v1.user.model.response.UserResponse;
 import com.github.dchristofolli.dropbox.v1.user.model.request.UserRequest;
+import com.github.dchristofolli.dropbox.v1.user.model.response.UserResponse;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -17,11 +17,11 @@ public class UserMapperContract {
 
     public static UserModel mapToImpl(UserRequest user) {
         return UserModel.builder()
+                .id(user.getId())
                 .name(user.getName())
                 .email(user.getEmail())
                 .cpf(user.getCpf())
                 .password(user.getPassword())
                 .build();
     }
-
 }
