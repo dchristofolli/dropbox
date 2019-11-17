@@ -1,18 +1,11 @@
-version: "2"
+version: "3"
 services:
-  mongo:
-    container_name: "dropbox-mongo"
-    image: mongo
+  postgres:
+    container_name: "dropbox_postgresql"
+    image: postgres
     ports:
-      - '27017:27017'
+      - '5432:5432'
+    environment:
+      POSTGRES_PASSWORD: 123456
     volumes:
-      - './mongo-data:/data/db'
-
-  mongo-express:
-    container_name: "dropbox-mongoe"
-    image: mongo-express
-    ports:
-      - '8081:8081'
-    depends_on:
-      - mongo
-  
+      - '/var/lib/postgresql/data:/var/lib/postgresql/data'
