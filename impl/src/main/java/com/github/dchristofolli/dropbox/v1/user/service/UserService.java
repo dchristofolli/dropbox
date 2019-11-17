@@ -11,10 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.github.dchristofolli.dropbox.v1.user.mapper.UserMapperImpl.mapToEntity;
-import static com.github.dchristofolli.dropbox.v1.user.mapper.UserMapperImpl.mapToModel;
 
 @Service
 @AllArgsConstructor
@@ -22,15 +20,11 @@ public class UserService {
 
     private UserRepository userRepository;
 
-//    public List<UserModel> findAll() {
-//        List<UserModel> users = userRepository
-//                .findAll()
-//                .stream()
-//                .map(this::mapToModel)
-//                .collect(Collectors.toList());
-//        if (users.isEmpty()) throw new ApiException("Nenhum usuário encontrado", HttpStatus.NOT_FOUND);
-//        return users;
-//    }
+    public List findAll() {
+        List users = userRepository.findAll();
+        if (users.isEmpty()) throw new ApiException("Nenhum usuário encontrado", HttpStatus.NOT_FOUND);
+        return users;
+    }
 
 //    public UserModel findById(String id) {
 //        return mapToModel(userRepository.findById(id)
@@ -39,7 +33,7 @@ public class UserService {
 
     public UserModel createUser(UserModel user) {
         FtpUser.saveUser(user.getName().toLowerCase(), user.getPassword());
-        return mapToModel(userRepository.createUser(mapToEntity(user)));
+        return mapToModel((UserEntity) userRepository.save(mapToEntity(user)));
     }
 
 //    public UserModel updateUser(UserModel user) {
@@ -61,8 +55,8 @@ public class UserService {
 //                }).orElseThrow(() -> new ApiException("Não encontrado", HttpStatus.NOT_FOUND));
 //    }
 //
-//    private UserModel mapToModel(UserEntity user) {
-//        return UserMapperImpl.mapToModel(user);
-//    }
+    private UserModel mapToModel(UserEntity user) {
+        return UserMapperImpl.mapToModel(user);
+    }
 
 }
