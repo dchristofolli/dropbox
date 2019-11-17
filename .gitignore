@@ -6,7 +6,7 @@ build/
 !**/src/test/**
 mongo-data
 java_pid*
-
+postgresql/data/
 ### STS ###
 .apt_generated
 .classpath
