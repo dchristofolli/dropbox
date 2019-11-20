@@ -1,5 +1,12 @@
 version: "2"
 services:
+  dropbox:
+    container_name: "dropbox-application"
+    image: dchristofolli/dropbox
+    ports:
+      - '8080:8080'
+    depends_on:
+      - mongo-express
   mongo:
     container_name: "dropbox-mongo"
     image: mongo

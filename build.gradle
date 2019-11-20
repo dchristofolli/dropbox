@@ -10,6 +10,17 @@ version = '1'
 dependencies {
     implementation project(':contract')
 }
+jar {
+    archivesBaseName = 'Main'
+}
+manifest {
+    attributes 'Main-Class': 'com.github.dchristofolli.dropbox.v1.DropboxApplication'
+}
+
+task runApp {
+    build
+}
+
 
 allprojects {
     apply plugin: 'java'
