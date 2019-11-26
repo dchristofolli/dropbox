@@ -20,6 +20,7 @@ public class UserService {
     private UserRepository userRepository;
 
     public List<UserModel> findAll() {
+
         List<UserModel> users = userRepository
                 .findAll()
                 .stream()
@@ -44,7 +45,7 @@ public class UserService {
     }
 
     public void deleteUser(String id) {
-        if ((!userRepository.existsById(id))){
+        if ((!userRepository.existsById(id))) {
             throw new ApiException("Digite um usuário válido", HttpStatus.BAD_REQUEST);
         }
         userRepository.deleteById(id);

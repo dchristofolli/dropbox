@@ -71,8 +71,8 @@ public class FileService {
     }
 
     public Page<FileMapper> pagedList(FileModelRequest request) {
-        return FtpConnect.pagedList((ArrayList<FileMapper>) showUserFiles(request.getUserModel()),
-                request.getPage(), request.getQuantity());
+        return FtpConnect.pagedList((ArrayList<FileMapper>) showUserFiles(request.getUserModel())
+        );
     }
 
     public Page<FileMapper> listsSharedWithMe(FileModelRequest request) {
