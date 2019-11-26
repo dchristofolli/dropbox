@@ -2,8 +2,10 @@ package com.github.dchristofolli.dropbox.v1.user.mapper;
 
 import com.github.dchristofolli.dropbox.v1.user.model.UserModel;
 import com.github.dchristofolli.dropbox.v1.user.repository.UserEntity;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
-
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserMapperImpl {
     public static UserModel mapToModel(UserEntity userEntity) {
         return UserModel.builder()
