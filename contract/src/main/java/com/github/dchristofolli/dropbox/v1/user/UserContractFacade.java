@@ -13,15 +13,17 @@ class UserContractFacade {
     private UserFacade facade;
 
     UserResponse findById(String id) {
-        return UserMapperContract.mapToContract(facade.findById(id));
+        return UserMapperContract.ImplMapUserModelToUserResponse(facade.findById(id));
     }
 
     UserResponse createUser(UserRequest user) {
-        return UserMapperContract.mapToContract(facade.createUser(UserMapperContract.mapToImpl(user)));
+        return UserMapperContract.ImplMapUserModelToUserResponse(facade.createUser(UserMapperContract
+                .implMapUserRequestToUserModel(user)));
     }
 
     UserResponse update(UserRequest user) {
-        return UserMapperContract.mapToContract(facade.updateUser(UserMapperContract.mapToImpl(user)));
+        return UserMapperContract.ImplMapUserModelToUserResponse(facade.updateUser(UserMapperContract
+                .implMapUserRequestToUserModel(user)));
     }
 
     void deleteUser(String id) {

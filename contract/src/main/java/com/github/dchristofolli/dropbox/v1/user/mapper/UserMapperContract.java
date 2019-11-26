@@ -8,14 +8,14 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserMapperContract {
-    public static UserResponse mapToContract(UserModel user) {
+    public static UserResponse ImplMapUserModelToUserResponse(UserModel user) {
         return UserResponse.builder().
                 id(user.getId()).
                 name(user.getName()).
                 build();
     }
 
-    public static UserModel mapToImpl(UserRequest user) {
+    public static UserModel implMapUserRequestToUserModel(UserRequest user) {
         return UserModel.builder()
                 .name(user.getName())
                 .email(user.getEmail())
