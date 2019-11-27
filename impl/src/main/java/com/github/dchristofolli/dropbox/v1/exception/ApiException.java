@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Getter
 @ResponseStatus(HttpStatus.BAD_REQUEST)
+//@todo revisar
 public class ApiException extends RuntimeException {
     private final HttpStatus status;
 

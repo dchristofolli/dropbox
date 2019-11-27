@@ -26,7 +26,6 @@ public class UserController {
     @ApiOperation("Exibe os dados de um usuário recebendo o ID")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Usuário encontrado"),
-            @ApiResponse(code = 401, message = "Usuário inválido"),
             @ApiResponse(code = 404, message = "Usuário não encontrado", response = ApiException.class),
             @ApiResponse(code = 500, message = "Ocorreu um erro no servidor")})
     @GetMapping("/{id}")
@@ -35,7 +34,6 @@ public class UserController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @NotNull
     @ApiOperation("Cadastra um novo usuário")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Usuário cadastrado com sucesso"),
@@ -54,20 +52,19 @@ public class UserController {
             @ApiResponse(code = 404, message = "Dados inválidos"),
             @ApiResponse(code = 500, message = "Ocorreu um erro no servidor")})
     @PatchMapping(path = "/{id}")
+    //@todo revisar esse endpoint
     public UserResponse update(@Valid @PathVariable(name = "id") String id,
                                @RequestBody UserRequest user) {
         return this.facade.update(user);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @NotNull
     @ApiOperation("Exclui o cadastro de um usuário")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Usuário excluído"),
-            @ApiResponse(code = 401, message = "Não autorizado"),
-            @ApiResponse(code = 403, message = "Acesso negado"),
             @ApiResponse(code = 500, message = "Ocorreu um erro no servidor")})
     @DeleteMapping("/{id}")
+    //@todo verificar se o usuário existe antes de excluir
     public void delete(@PathVariable("id") @NotNull String id) {
         this.facade.deleteUser(id);
     }
@@ -77,6 +74,7 @@ public class UserController {
     @ApiResponses({
     })
     @PatchMapping
+    //@todo refazer todo o contrato
     public UserModel allowFollower(@RequestParam String idUser,
                                    @RequestParam String idFollower) {
         return facade.allowFollower(idUser, idFollower);
