@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.github.dchristofolli.dropbox.v1.user.mapper.UserMapperImpl.mapToModel;
+
 @Service
 @AllArgsConstructor
 public class UserService {
@@ -24,7 +26,7 @@ public class UserService {
         List<UserModel> users = userRepository
                 .findAll()
                 .stream()
-                .map(this::mapToModel)
+                .map(UserMapperImpl::mapToModel)
                 .collect(Collectors.toList());
         if (users.isEmpty()) throw new ApiException("Nenhum usuário encontrado", HttpStatus.NOT_FOUND);
         return users;
@@ -58,9 +60,4 @@ public class UserService {
                     return updateUser(mapToModel(user));
                 }).orElseThrow(() -> new ApiException("Não encontrado", HttpStatus.NOT_FOUND));
     }
-
-    private UserModel mapToModel(UserEntity user) {
-        return UserMapperImpl.mapToModel(user);
-    }
-
 }
