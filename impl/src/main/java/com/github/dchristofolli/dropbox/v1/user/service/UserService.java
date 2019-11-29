@@ -4,7 +4,6 @@ import com.github.dchristofolli.dropbox.v1.exception.ApiException;
 import com.github.dchristofolli.dropbox.v1.ftp.FtpUser;
 import com.github.dchristofolli.dropbox.v1.user.mapper.UserMapperImpl;
 import com.github.dchristofolli.dropbox.v1.user.model.UserModel;
-import com.github.dchristofolli.dropbox.v1.user.repository.UserEntity;
 import com.github.dchristofolli.dropbox.v1.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.github.dchristofolli.dropbox.v1.user.mapper.UserMapperImpl.mapToEntity;
 import static com.github.dchristofolli.dropbox.v1.user.mapper.UserMapperImpl.mapToModel;
 
 @Service
@@ -39,11 +39,12 @@ public class UserService {
 
     public UserModel createUser(UserModel user) {
         FtpUser.saveUser(user.getName().toLowerCase(), user.getPassword());
-        return mapToModel(userRepository.save(UserMapperImpl.mapToEntity(user)));
+        return mapToModel(userRepository.save(mapToEntity(user)));
     }
 
-    public UserModel updateUser(UserModel user) {
-        return mapToModel(userRepository.save(UserMapperImpl.mapToEntity(user)));
+    public UserModel updateUser(String cpf) {
+        UserModel userModel = mapToModel(userRepository.findByCpf(cpf).get());
+        return createUser(userModel);
     }
 
     public void deleteUser(String id) {
@@ -57,7 +58,7 @@ public class UserService {
         return userRepository.findById(userId)
                 .map(user -> {
                     user.setFollower(followerId);
-                    return updateUser(mapToModel(user));
+                    return createUser(mapToModel(user));
                 }).orElseThrow(() -> new ApiException("Não encontrado", HttpStatus.NOT_FOUND));
     }
 }

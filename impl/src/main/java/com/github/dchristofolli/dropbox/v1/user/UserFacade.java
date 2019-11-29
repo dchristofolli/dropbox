@@ -26,7 +26,7 @@ public class UserFacade {
         return service.allowFollower(idUser, idFollower);
     }
 
-    public UserModel updateUser(UserModel user) {
-        return service.updateUser(user);
+    public UserModel updateUser(String cpf) {
+        return service.updateUser(cpf);
     }
 }
