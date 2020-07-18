@@ -1,7 +1,6 @@
 package com.github.dchristofolli.dropbox.v1.user.service;
 
 import com.github.dchristofolli.dropbox.v1.exception.ApiException;
-import com.github.dchristofolli.dropbox.v1.ftp.FtpUser;
 import com.github.dchristofolli.dropbox.v1.user.mapper.UserMapperImpl;
 import com.github.dchristofolli.dropbox.v1.user.model.UserModel;
 import com.github.dchristofolli.dropbox.v1.user.repository.UserRepository;
@@ -38,7 +37,7 @@ public class UserService {
     }
 
     public UserModel createUser(UserModel user) {
-        FtpUser.saveUser(user.getName().toLowerCase(), user.getPassword());
+//        FtpUser.saveUser(user.getName().toLowerCase(), user.getPassword());
         return mapToModel(userRepository.save(mapToEntity(user)));
     }
 
